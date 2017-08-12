@@ -1,4 +1,4 @@
-angular.module('MetronicApp').controller('DashboardController', function($rootScope, $scope, $http, $timeout) {
+angular.module('KanguDashboard').controller('DashboardController', function($rootScope, $scope, $http, $timeout) {
     $scope.$on('$viewContentLoaded', function() {   
         // initialize core components
         App.initAjax();
@@ -8,4 +8,6 @@ angular.module('MetronicApp').controller('DashboardController', function($rootSc
     $rootScope.settings.layout.pageContentWhite = true;
     $rootScope.settings.layout.pageBodySolid = false;
     $rootScope.settings.layout.pageSidebarClosed = false;
+
+    console.log("hola");
 });

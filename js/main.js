@@ -28,6 +28,13 @@ KanguDashboard.config(['$controllerProvider', function($controllerProvider) {
  END: BREAKING CHANGE in AngularJS v1.3.x:
 *********************************************/
 
+/* Capitalize filter */
+KanguDashboard.filter('capitalize', function() {
+    return function(input) {
+      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    }
+});
+
 /* Setup global settings */
 KanguDashboard.factory('settings', ['$rootScope', function($rootScope) {
 	// supported languages
@@ -132,7 +139,7 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 		.state('dashboard_menu', {
 			url: "/",
 			templateUrl: "../views/dashboard.html",            
-			data: {pageTitle: 'Admin Dashboard Template'},
+			data: {pageTitle: 'Dashboards'},
 			controller: "DashboardController",
 			resolve: {
 				deps: ['$ocLazyLoad', function($ocLazyLoad) {
@@ -147,6 +154,32 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 
 							'../assets/pages/scripts/dashboard.min.js',
 							'../js/controllers/DashboardController.js',
+						] 
+					});
+				}]
+			}
+		})
+
+		// Users
+		.state('users_menu', {
+			url: "/users",
+			templateUrl: "../views/users_list.html",            
+			data: {pageTitle: 'Users'},
+			controller: "UserListController",
+			resolve: {
+				deps: ['$ocLazyLoad', function($ocLazyLoad) {
+					return $ocLazyLoad.load({
+						name: 'KanguDashboard',
+						insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+						files: [
+							'../assets/global/plugins/datatables/datatables.min.css', 
+							'../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
+
+							'../assets/global/plugins/datatables/datatables.all.min.js',
+
+							'../assets/pages/scripts/table-datatables-managed.min.js',
+							
+							'../js/controllers/UserListController.js',
 						] 
 					});
 				}]
@@ -497,29 +530,29 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 KanguDashboard.run(["$rootScope", "settings", "$state", function($rootScope, settings, $state) {
 	$rootScope.$state = $state; // state to be accessed from view
 	$rootScope.$settings = settings; // state to be accessed from view
-	$rootScope.server = function(){
-		//return "http://kanguserver.cloudapp.net/api/v1/";
-		return "http://localhost:3000/v1/";
+	$rootScope.server = function(){ // server address
+		return "http://kanguserver.cloudapp.net/v1/";
+		//return "http://localhost:3000/v1/";
 	}
-	$rootScope.storageUser = function(data){
+	$rootScope.storageUser = function(data){ // storage user credentials to localstorage
 		window.localStorage.kanguDashboard = JSON.stringify(data);;
 	}
-	$rootScope.loadUser = function(){
+	$rootScope.loadUser = function(){ // load user credentials from localstorage
 		var t = window.localStorage.kanguDashboard;
 		if (t)
 			return JSON.parse(t);
 		return t;
 	}
-	$rootScope.removeUser = function(){
+	$rootScope.removeUser = function(){ // remove user credentials of localstorage
 		window.localStorage.removeItem('kanguDashboard')
 	}
-	$rootScope.variantImageUrl = function(){
+	$rootScope.variantImageUrl = function(){ // get product variant image url
 		if (this.server() == 'http://localhost:3000/api/v1/')
 			return 'https://kangublobdevs.blob.core.windows.net/variant/';
 		else
 			return 'https://kangublobs.blob.core.windows.net/variant/';
 	}
-	$rootScope.print = function(div){
+	$rootScope.print = function(div){ // print a div
 		var printContents = document.getElementById(div).innerHTML;
 		var w = window.open();
 		$(w.document.body).html(printContents);

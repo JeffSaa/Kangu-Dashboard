@@ -81,7 +81,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="btn-group">
-								<a href="#" data-target="#myModal_autocomplete" role="button" class="btn sbold green" data-toggle="modal"> Add new <i class="fa fa-plus"></i> </a>								
+								<a href="#" data-target="#register_modal" role="button" class="btn sbold green" data-toggle="modal"> Add new <i class="fa fa-plus"></i> </a>								
 							</div>
 						</div>
 						<!--div class="col-md-6">
@@ -123,7 +123,7 @@
 										</button>
 										<ul class="dropdown-menu pull-left" role="menu">
 											<li>
-												<a href="javascript:;">
+												<a href="#" data-target="#charge_modal" ng-click="selectUser(user)" data-toggle="modal">
 													<i class="icon-user"></i> Crear cargo </a>
 											</li>
 										</ul>
@@ -139,7 +139,8 @@
 	</div>
 </div>
 <!-- END MAIN CONTENT -->
-<div id="myModal_autocomplete" class="modal fade" role="dialog" aria-hidden="true">
+<!-- BEGIN REGISTER MODAL  -->
+<div id="register_modal" class="modal fade" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -200,3 +201,36 @@
 		</div>
 	</div>
 </div>
+<!-- END REGISTER MODAL  -->
+<!-- BEGIN REGISTER MODAL  -->
+<div id="charge_modal" class="modal fade" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Asignar cargo a {{target_user.name | capitalize}}</h4>
+			</div>
+			<div class="modal-body form">
+				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="createCharge($event, target_user, charge)">
+					<div class="form-body">
+						<div class="form-group">
+							<label class="col-md-3 control-label">Seleccionar cargo</label>
+							<div class="col-md-9">
+								<select class="form-control" ng-model="charge">
+									<option value="101">Admin</option>
+									<option value="102">Supervisor</option>
+								</select>
+							</div>
+						</div>						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary">
+							<i class="fa fa-check"></i> Registrar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END REGISTER MODAL  -->

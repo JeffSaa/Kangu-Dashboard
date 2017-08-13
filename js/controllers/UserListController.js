@@ -30,6 +30,22 @@ angular.module('KanguDashboard').controller('UserListController', function($root
 		$event.target.submit();
 	}
 
+	$scope.selectUser = function(user){
+		$scope.target_user = {};
+		angular.copy(user, $scope.target_user);
+	}
+
+	$scope.createCharge = function($event, user, charge){
+		c = {user_id: user.id, type_id: charge};
+		$http({method: 'POST', url: $rootScope.server()+'charge/charge', data:c, headers:{"Authorization":$rootScope.loadUser().token}
+		}).then(function successCallback(response) {
+			toastr.success('Cargo creado');
+		}, function errorCallback(response) {
+			toastr.error('No se pudo crear cargo');
+		});
+		$event.target.submit();
+	}
+
 	$scope.getUsers();
 	
 });

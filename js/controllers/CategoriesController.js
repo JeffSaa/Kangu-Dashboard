@@ -14,7 +14,7 @@ angular.module('KanguDashboard').controller('CategoriesController', function($ro
 		}).then(function successCallback(response) {
 			$scope.categories = response.data.model;
 		}, function errorCallback(response) {
-			console.log(response.data);
+			toastr.error('Error obteniendo datos');
 		});
 	}
 
@@ -24,7 +24,7 @@ angular.module('KanguDashboard').controller('CategoriesController', function($ro
 			toastr.success('Categoria creada');
 			$scope.getCategories();
 		}, function errorCallback(response) {
-			toastr.error('Error obteniendo datos');
+			toastr.error('Error creando categoria');
 		});
 	}
 

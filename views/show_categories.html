@@ -8,6 +8,10 @@
 		</li>
 		<li>
 			<a ui-sref="categories_menu">Categories</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a href="#">{{categorie.categorie.name | capitalize}}</a>
 		</li>
 	</ul>
 	<div class="page-toolbar">
@@ -57,7 +61,7 @@
 			<div class="portlet-title">
 				<div class="caption font-dark">
 					<i class="icon-settings font-dark"></i>
-					<span class="caption-subject bold uppercase"> Tabla de listado</span>
+					<span class="caption-subject bold uppercase"> Subcategorias</span>
 				</div>
 				<div class="actions">
 					<div class="inbox-body">
@@ -107,7 +111,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="odd gradeX" ng-repeat="categorie in categories">
+							<tr class="odd gradeX" ng-repeat="categorie in categorie.subcategories">
 								<td> {{categorie.name | capitalize}} </td>
 								<td> {{categorie.updated_at | date : medium}} </td>
 								<td>
@@ -117,7 +121,7 @@
 										</button>
 										<ul class="dropdown-menu pull-left" role="menu">
 											<li>
-												<a ui-sref="show_categories({id: categorie.id})">
+												<a href="#">
 													<i class="icon-user"></i> Detalles </a>
 											</li>
 										</ul>
@@ -133,16 +137,16 @@
 	</div>
 </div>
 <!-- END MAIN CONTENT -->
-<!-- BEGIN CREATE CATEGORIE MODAL  -->
+<!-- BEGIN CREATE SUBCATEGORIE MODAL  -->
 <div id="createcategorie_modal" class="modal fade" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-				<h4 class="modal-title">Crear categoria</h4>
+				<h4 class="modal-title">Crear subcategoria</h4>
 			</div>
 			<div class="modal-body form">
-				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="createCategorie($event, categorie)">
+				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="create_subcategorie($event, categorie)">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="col-md-3 control-label">Nombre</label>
@@ -160,4 +164,4 @@
 		</div>
 	</div>
 </div>
-<!-- END CREATE CATEGORIE MODAL  -->
+<!-- END CREATE SUBCATEGORIE MODAL  -->

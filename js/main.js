@@ -289,8 +289,10 @@ KanguDashboard.run(["$rootScope", "settings", "$state", function($rootScope, set
 	$rootScope.$state = $state; // state to be accessed from view
 	$rootScope.$settings = settings; // state to be accessed from view
 	$rootScope.server = function(){ // server address
-		//return "http://kanguserver.cloudapp.net/v1/";
-		return "http://localhost:3000/v1/";
+		if (window.location.href.indexOf('localhost') == -1)
+			return "http://kanguserver.cloudapp.net/v1/";
+		else
+			return "http://localhost:3000/v1/";
 	}
 	$rootScope.storageUser = function(data){ // storage user credentials to localstorage
 		window.localStorage.kanguDashboard = JSON.stringify(data);;

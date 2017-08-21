@@ -1,0 +1,88 @@
+<div class="form-group">
+	<form action="javascript:;" method="post" class="mt-repeater form-horizontal" ng-submit="saveEntries($event, entry)">
+		<h3 class="mt-repeater-title">Crear entrada de inventario</h3>
+		<div data-repeater-list="group-a">
+			<div data-repeater-item class="mt-repeater-item">
+				<div class="mt-repeater-input">
+					<label class="control-label">Proveedor</label>
+						<br/>
+						<angucomplete-alt
+							id="providerId"
+							field-required="true"
+							input-name="provider"
+							placeholder="Busqueda de proveedor"
+							pause="100"
+							selected-object="providerSelected"
+							remote-api-handler="searchProvider"
+							title-field="provider.name"
+							minlength="1"
+							inputclass="form-control form-control-small"/>
+				</div>
+				<div class="mt-repeater-input">
+					<label class="control-label">Numero de factura</label>
+					<br/>
+					<input class="input-group form-control form-control-inline date date-picker" size="16" type="text" name="date-input" ng-model="entry.bill_number" placeholder="No. de factura" />
+				</div>
+				<div class="mt-repeater-input">
+					<label class="control-label">Fecha de entrada</label>
+					<br/>
+					<input class="input-group form-control form-control-inline date date-picker" size="16" type="date" name="date-input" ng-model="entry.date" />
+				</div>
+				<div class="mt-repeater-input mt-checkbox-inline">
+					<label class="control-label">Esta pago?</label>
+					<br/>
+					<label class="mt-checkbox">
+						<input type="checkbox" id="inlineCheckbox21" value="option1" ng-model="entry.is_payed">
+						<span></span>
+					</label>
+				</div>
+				<div class="mt-repeater-input">
+					<label class="control-label">Fecha de pago</label>
+					<br/>
+					<input class="input-group form-control form-control-inline date date-picker" size="16" type="date" name="date-input" ng-model="entry.pay_day" />
+				</div>
+			</div>
+		</div>
+		<div data-repeater-list="group-a" ng-repeat="e in entry.entries">
+			<div data-repeater-item class="mt-repeater-item">
+				<div class="mt-repeater-input">
+					<label class="control-label">Variante</label>
+						<br/>
+						<angucomplete-alt
+							id="ex1"
+							field-required="true"
+							placeholder="Busqueda de variante"
+							pause="100"
+							selected-object="e.variant"
+							remote-api-handler="searchPVariant"
+							title-field="variant.name"
+							minlength="1"
+							inputclass="form-control form-control-small"/>
+				</div>
+				<div class="mt-repeater-input">
+					<label class="control-label">Cantidad</label>
+					<br/>
+					<input class="input-group form-control form-control-inline date date-picker" size="16" type="text" name="date-input" ng-model="e.quantity" placeholder="Cantidad comprada" />
+				</div>
+				<div class="mt-repeater-input">
+					<label class="control-label">Precio unitario</label>
+					<br/>
+					<input class="input-group form-control form-control-inline date date-picker" size="16" type="text" name="date-input" ng-model="e.unit_value" placeholder="Precio por unidad" />
+				</div>
+				<div class="mt-repeater-input">
+					<label class="control-label">Precio de compra</label>
+					<br/>
+					<input disabled class="input-group form-control form-control-inline date date-picker" size="16" type="text" name="date-input" ng-value="(e.quantity * e.unit_value) | currency: '$': 0 " />
+				</div>
+				<div class="mt-repeater-input">
+					<a href="javascript:;" data-repeater-delete class="btn btn-danger mt-repeater-delete" ng-click="removeEntry($index)">
+						<i class="fa fa-close"></i> Delete</a>
+				</div>
+			</div>
+		</div>
+		<button type="button" class="btn btn-success" ng-click="addEntry()">
+			<i class="fa fa-plus"></i> Agregar campo</button>
+		<button href="javascript:;" data-repeater-create class="btn btn-success mt-repeater-add">
+			<i class="fa fa-plus"></i> Guardar entradas</button>
+	</form>
+</div>

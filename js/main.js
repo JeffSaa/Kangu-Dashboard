@@ -305,6 +305,9 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 
 							'../assets/global/plugins/bootstrap-toastr/toastr.min.js',
 							'../assets/pages/scripts/ui-toastr.min.js',
+
+							'../assets/global/scripts/angucomplete-alt.js',						
+							'../assets/global/css/angucomplete-alt.css',
 							
 							'../js/controllers/ProvidersController.js',
 						] 

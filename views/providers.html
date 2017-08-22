@@ -142,29 +142,30 @@
 				<h4 class="modal-title">Crear proveedor</h4>
 			</div>
 			<div class="modal-body form">
-				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="createCategorie($event, categorie)">
+				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="createProvider($event, provider)">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="col-md-3 control-label">Nombre</label>
 							<div class="col-md-8">
-								<input type="text" required class="form-control spinner" placeholder="Ej. Frutas" ng-model="categorie.name"> </div>
+								<input type="text" required class="form-control spinner" placeholder="Ej. CarnesProv" ng-model="provider.name"> </div>
 						</div>
 					</div>
 					<div class="form-body">
 						<div class="form-group">
-							<label class="col-md-3 control-label">Nombre</label>
+							<label class="col-md-3 control-label">Usuario</label>
 							<div class="col-md-8">
 								<angucomplete-alt
 									id="providerId"
 									field-required="true"
 									input-name="provider"
-									placeholder="Busqueda de proveedor"
+									placeholder="Busqueda de usuario"
 									pause="100"
-									selected-object="providerSelected"
-									remote-api-handler="searchProvider"
-									title-field="provider.name"
+									selected-object="UserSelected"
+									remote-api-handler="searchUser"
+									title-field="name"
+									description-field="lastname"
 									minlength="1"
-									inputclass="form-control form-control-small"/>
+									inputclass="form-control spinner"/>
 						</div>
 					</div>
 					<div class="modal-footer">

@@ -392,6 +392,51 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 			}
 		})
 
+		// Show Product
+		.state('show_product', {
+			url: "/products/:id",
+			templateUrl: "../views/show_product.html",            
+			data: {pageTitle: 'Products'},
+			controller: "ShowProductController",
+			resolve: {
+				deps: ['$ocLazyLoad', function($ocLazyLoad) {
+					return $ocLazyLoad.load({
+						name: 'KanguDashboard',
+						insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+						files: [
+							'../assets/global/plugins/datatables/datatables.min.css', 
+							'../assets/pages/scripts/table-datatables-scroller.min.js',
+							'../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.css',
+
+							'../assets/global/plugins/datatables/datatables.all.min.js',
+
+							'../assets/pages/scripts/table-datatables-managed.min.js',
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+							'../assets/pages/scripts/ui-toastr.min.js',
+
+							'../assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js',
+							'../assets/pages/scripts/components-date-time-pickers.min.js',
+							'../assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css',	
+
+							'../assets/global/scripts/angucomplete-alt.js',						
+							'../assets/global/css/angucomplete-alt.css',
+
+							'../assets/pages/scripts/table-datatables-scroller.min.js',
+
+							'../assets/global/scripts/FileAPI.min.js',
+							'../assets/global/scripts/ng-file-upload-shim.min.js',
+							'../assets/global/scripts/ng-file-upload.min.js',
+							
+							'../js/controllers/ShowProductController.js',
+						] 
+					});
+				}]
+			}
+		})
+
 }]);
 
 /* Init global settings and run the app */
@@ -400,7 +445,7 @@ KanguDashboard.run(["$rootScope", "settings", "$state", function($rootScope, set
 	$rootScope.$settings = settings; // state to be accessed from view
 	$rootScope.server = function(){ // server address
 		if (window.location.href.indexOf('localhost') == -1) // validate develop enviroment
-			return "http://kanguserver.cloudapp.net/v1/";
+			return "http://192.168.0.111:3000/v1/";
 		else
 			return "http://localhost:3000/v1/";
 	}

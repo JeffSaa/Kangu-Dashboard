@@ -1,0 +1,253 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a ui-sref="dashboard_menu">Tienda</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a ui-sref="products_menu">Productos</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a href="#">{{ product.product.name | capitalize}}</a>
+		</li>
+	</ul>
+	<div class="page-toolbar">
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true"> Actions
+				<i class="fa fa-angle-down"></i>
+			</button>
+			<ul class="dropdown-menu pull-right" role="menu">
+				<li>
+					<a href="#">
+						<i class="icon-user"></i> New User </a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="icon-present"></i> New Event
+						<span class="badge badge-success">4</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="icon-basket"></i> New order </a>
+				</li>
+				<li class="divider"> </li>
+				<li>
+					<a href="#">
+						<i class="icon-flag"></i> Pending Orders
+						<span class="badge badge-danger">4</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="icon-users"></i> Pending Users
+						<span class="badge badge-warning">12</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<h3 class="page-title"> Administracion de productos</h3>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row">
+	<div class="col-md-12">
+		<!-- BEGIN EXAMPLE TABLE PORTLET-->
+		<div class="portlet light bordered">
+			<div class="portlet-title">
+				<div class="caption font-dark">
+					<i class="icon-settings font-dark"></i>
+					<span class="caption-subject bold uppercase"> Tabla de variantes</span>
+				</div>
+				<div class="actions">
+					<div class="inbox-body">
+						<div class="inbox-header">
+							<form class="form-inline pull-right" action="index.html">
+								<div class="input-group input-medium">
+									<input type="text" class="form-control" placeholder="Nombre">
+									<span class="input-group-btn">
+										<button type="submit" class="btn green">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="table-toolbar">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="btn-group">
+								<a href="#" data-target="#register_modal" role="button" class="btn sbold green" data-toggle="modal"> Add new <i class="fa fa-plus"></i> </a>								
+							</div>
+						</div>
+						<!--div class="col-md-6">
+							<div class="pagination-control pull-right">
+								<span class="pagination-info"> 1-30 of 789 </span>
+								<a class="btn btn-sm blue btn-outline">
+									<i class="fa fa-angle-left"></i>
+								</a>
+								<a class="btn btn-sm blue btn-outline">
+									<i class="fa fa-angle-right"></i>
+								</a>
+							</div>
+						</div-->
+					</div>
+				</div>
+				<div class="portlet-body flip-scroll table-both-scroll">
+					<table class="table table-striped table-bordered table-hover order-column flip-content">
+						<thead class="flip-content">
+							<tr>
+								<th> Nombre </th>
+								<th> Entrada ($) </th>
+								<th> Natural (%) </th>
+								<th> Natural ($) </th>
+								<th> N. Total </th>
+								<th> Business (%) </th>
+								<th> Business ($) </th>
+								<th> B. Total </th>
+								<th> Medida </th>
+								<th> Cantidad Dflt </th>
+								<th> Descripcion </th>
+								<th> Iva (%) </th>
+								<th> Actions </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="odd gradeX" ng-repeat="v in product.variants">
+								<td> {{v.name | capitalize}} </td>
+								<td> {{v.entry_price | currency:'$':0}} </td>
+								<td> {{v.natural_percent}} </td>
+								<td> {{v.natural_gain}} </td>
+								<td> {{getTotalPrice(v.entry_price, v.natural_percent, v.natural_gain) | currency:'$':0}} </td>
+								<td> {{v.business_percent}} </td>
+								<td> {{v.business_gain}} </td>
+								<td> {{getTotalPrice(v.entry_price, v.business_percent, v.business_gain) | currency:'$':0}} </td>
+								<td> {{v.unit_measurement}} </td>
+								<td> {{v.default_quantity}} </td>
+								<td> {{v.description | capitalize}} </td>
+								<td> {{v.iva}} </td>
+								<td>
+									<div class="btn-group">
+										<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
+											<i class="fa fa-angle-down"></i>
+										</button>
+										<ul class="dropdown-menu pull-left" role="menu">
+											<li>
+												<a href="#" ui-sref="show_product({id: p.product.id})">
+													<i class="icon-user"></i> Ver detalles </a>
+											</li>
+										</ul>
+									</div>
+								</td>
+							</tr>							
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- END EXAMPLE TABLE PORTLET-->
+	</div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN CREATE PRODUCTVARIANT MODAL  -->
+<div id="register_modal" class="modal fade" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Creacion de variante</h4>
+			</div>
+			<div class="modal-body form">
+				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="createVariant($event, variant)">
+					<div class="form-body">
+						<div class="form-group">
+							<label class="col-md-3 control-label">Nombre:</label>
+							<div class="col-md-8">
+								<input type="text" required class="form-control spinner" placeholder="Ej. Papa" ng-model="variant.name"> </div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Precio entrada:</label>
+							<div class="col-md-8">
+								<input type="number" required class="form-control spinner" placeholder="Ej. $130" ng-model="variant.entry_price">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-4">
+								<input type="number" required class="form-control spinner" placeholder="Business percent" ng-model="variant.business_percent">
+							</div>
+							<div class="col-md-4">
+								<input type="number" required class="form-control spinner" placeholder="Business Gain" ng-model="variant.business_gain">
+							</div>
+							<div class="col-md-4">
+								<input type="text" class="form-control spinner" value="{{getTotalPrice(variant.entry_price, variant.business_percent, variant.business_gain) | currency:'$':0}}" placeholder="Total" disabled>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-4">
+								<input type="number" required class="form-control spinner" placeholder="Natural percent" ng-model="variant.natural_percent">
+							</div>
+							<div class="col-md-4">
+								<input type="number" required class="form-control spinner" placeholder="Natural Gain" ng-model="variant.natural_gain">
+							</div>
+							<div class="col-md-4">
+								<input type="text" class="form-control spinner" value="{{getTotalPrice(variant.entry_price, variant.natural_percent, variant.natural_gain) | currency:'$':0}}" placeholder="Total" disabled>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Peso unidad:</label>
+							<div class="col-md-8">
+								<input type="number" required class="form-control spinner" placeholder="Ej. 3" ng-model="variant.unit_measurement">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Cantidad default:</label>
+							<div class="col-md-8">
+								<input type="number" required class="form-control spinner" placeholder="Ej. 4" ng-model="variant.default_quantity">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">IVA:</label>
+							<div class="col-md-8">
+								<input type="number" min="0" required class="form-control spinner" placeholder="Ej. 5" ng-model="variant.iva">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Descripcion:</label>
+							<div class="col-md-8">
+								<input type="text" required class="form-control spinner" placeholder="Ej. 5 por lata" ng-model="variant.description">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Imagen</label>
+							<div class="col-md-8">
+									<div ng-hide="variant.photo" class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+										<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+									</div>
+									<img class="fileinput-preview thumbnail" ngf-thumbnail="variant.photo" style="max-width: 200px; max-height: 150px;"> </img>
+									<div>
+										<div class="btn default btn-file" ngf-select ng-model="variant.photo" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-resize-if="false">
+											Select image
+										</div>
+									</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary">
+							<i class="fa fa-check"></i> Crear</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END CREATE PRODUCTVARIANT MODAL  -->

@@ -482,7 +482,7 @@ KanguDashboard.run(["$rootScope", "settings", "$state", function($rootScope, set
 	$rootScope.$settings = settings; // state to be accessed from view
 	$rootScope.server = function(){ // server address
 		if (window.location.href.indexOf('localhost') == -1) // validate develop enviroment
-			return "http://192.168.0.111:3000/v1/";
+			return "http://kanguserver.cloudapp.net/v1/";
 		else
 			return "http://localhost:3000/v1/";
 	}

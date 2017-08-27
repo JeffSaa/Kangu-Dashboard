@@ -110,7 +110,7 @@
 						</thead>
 						<tbody>
 							<tr class="odd gradeX" ng-repeat="user in users">
-								<td> {{user.email}} </td>
+								<td> {{user.email | limitTo: 20}} </td>
 								<td> {{user.name | capitalize}} </td>
 								<td> {{user.lastname | capitalize}} </td>
 								<td> {{user.phone}} </td>

@@ -38,6 +38,30 @@ angular.module('KanguDashboard', ['ngFileUpload']).controller('ShowProductContro
 		});
 	}
 
+	$scope.editing = function(v){
+		$scope.temp_variant = {};
+		angular.copy(v, $scope.temp_variant);
+	}
+
+	$scope.updateVariant = function($event, variant){
+		variant.product_id = $stateParams.id;
+		Upload.upload({
+			url:  $rootScope.server()+'variants/variants/'+variant.id,
+			method: 'PUT',
+			headers:{"Authorization":$rootScope.loadUser().token},
+			data: variant
+		}).then(function (resp) {
+			toastr.success('Variante actualizada');
+			$scope.get_product();
+		}, function (resp) {
+			toastr.error('Error actualizando variante');
+		}, function (evt) {
+			var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+		});
+	}
+
+	$scope.variantImageUrl = $rootScope.variantImageUrl;
+
 	$scope.get_product();
 	
 });

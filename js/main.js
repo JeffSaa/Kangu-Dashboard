@@ -498,11 +498,11 @@ KanguDashboard.run(["$rootScope", "settings", "$state", function($rootScope, set
 	$rootScope.removeUser = function(){ // remove user credentials of localstorage
 		window.localStorage.removeItem('kanguDashboard')
 	}
-	$rootScope.variantImageUrl = function(){ // get product variant image url
-		if (this.server() == 'http://localhost:3000/api/v1/')
-			return 'https://kangublobdevs.blob.core.windows.net/variant/';
+	$rootScope.variantImageUrl = function(name){ // get product variant image url
+		if (window.location.href.indexOf('localhost') == -1)
+			return 'https://kangublobs.blob.core.windows.net/variant/'+name;
 		else
-			return 'https://kangublobs.blob.core.windows.net/variant/';
+			return 'https://kangublobdev.blob.core.windows.net/variant/'+name;
 	}
 	$rootScope.print = function(div){ // print a div
 		var printContents = document.getElementById(div).innerHTML;

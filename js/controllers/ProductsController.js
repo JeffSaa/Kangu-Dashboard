@@ -11,13 +11,22 @@ angular.module('KanguDashboard').controller('ProductsController', function($root
 
 	$scope.product = {measurement_type: 1};
 
-	$scope.getProducts = function(){
-		$http({method: 'GET', url: $rootScope.server()+'products/products', headers:{"Authorization":$rootScope.loadUser().token}
-		}).then(function successCallback(response) {
-			$scope.products = response.data;
-		}, function errorCallback(response) {
-			toastr.error('Error obteniendo datos');
-		});
+	$scope.headers = {current_page: 0};
+
+	$scope.getProducts = function(page = 1){
+		var x = Number($scope.headers.current_page) + Number(page);
+		if (x > 0 && (!$scope.headers.pages_count || $scope.headers.pages_count >= x)) {
+			$scope.headers.current_page = x;
+			$http({method: 'GET', url: $rootScope.server()+'products/products', params:{page: $scope.headers.current_page}, 
+				headers:{"Authorization":$rootScope.loadUser().token}
+			}).then(function successCallback(response) {
+				$scope.products = response.data;
+				$scope.headers.pages_count = response.headers('pages_count');
+				$scope.headers.current_page = response.headers('current_page');
+			}, function errorCallback(response) {
+				toastr.error('Error obteniendo datos');
+			});
+		}
 	}
 
 	$scope.searchSubcategorie = function(q, time){

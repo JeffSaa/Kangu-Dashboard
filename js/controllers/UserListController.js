@@ -9,13 +9,22 @@ angular.module('KanguDashboard').controller('UserListController', function($root
 	$rootScope.settings.layout.pageBodySolid = false;
 	$rootScope.settings.layout.pageSidebarClosed = false;
 
-	$scope.getUsers = function(){
-		$http({method: 'GET', url: $rootScope.server()+'users/users', headers:{"Authorization":$rootScope.loadUser().token}
-		}).then(function successCallback(response) {
-			$scope.users = response.data.model;
-		}, function errorCallback(response) {
-			toastr.error('Error obteniendo datos');
-		});
+	$scope.headers = {current_page: 0};
+
+	$scope.getUsers = function(page = 1){
+		var x = Number($scope.headers.current_page) + Number(page);
+		if (x > 0 && (!$scope.headers.pages_count || $scope.headers.pages_count >= x)) {
+			$scope.headers.current_page = x;
+			$http({method: 'GET', url: $rootScope.server()+'users/users', params:{page: $scope.headers.current_page}, 
+					headers:{"Authorization":$rootScope.loadUser().token}
+			}).then(function successCallback(response) {
+				$scope.users = response.data;
+				$scope.headers.pages_count = response.headers('pages_count');
+				$scope.headers.current_page = response.headers('current_page');
+			}, function errorCallback(response) {
+				toastr.error('Error obteniendo datos');
+			});
+		}
 	}
 
 	$scope.register = function($event, user){

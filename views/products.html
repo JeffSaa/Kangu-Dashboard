@@ -84,17 +84,17 @@
 								<a href="#" data-target="#register_modal" role="button" class="btn sbold green" data-toggle="modal"> Add new <i class="fa fa-plus"></i> </a>								
 							</div>
 						</div>
-						<!--div class="col-md-6">
+						<div class="col-md-6">
 							<div class="pagination-control pull-right">
-								<span class="pagination-info"> 1-30 of 789 </span>
-								<a class="btn btn-sm blue btn-outline">
+								<span class="pagination-info"> {{headers.current_page}} of {{headers.pages_count}} page(s)</span>
+								<a class="btn btn-sm blue btn-outline" ng-click="getProducts(-1)">
 									<i class="fa fa-angle-left"></i>
 								</a>
-								<a class="btn btn-sm blue btn-outline">
+								<a class="btn btn-sm blue btn-outline" ng-click="getProducts(1)">
 									<i class="fa fa-angle-right"></i>
 								</a>
 							</div>
-						</div-->
+						</div>
 					</div>
 				</div>
 				<div class="portlet-body flip-scroll">

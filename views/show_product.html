@@ -120,21 +120,19 @@
 								<td ng-hide="editing_mode"> {{v.iva}} </td>
 								<td>
 									<div class="btn-group">
-										<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
+										<button class="btn btn-xs green dropdown-toggle" type="button"  aria-expanded="false" data-toggle="dropdown" ng-hide="editing_mode"> Actions
 											<i class="fa fa-angle-down"></i>
 										</button>
+										<button class="btn btn-xs green" type="button"  aria-expanded="false" ng-show="editing_mode" ng-click="updateVariant($event, v, true)"> Guardar
+										</button>
 										<ul class="dropdown-menu pull-left" role="menu">
-											<li ng-hide="editing_mode">
+											<li>
 												<a href="#" ui-sref="variant_providers({variant_id: v.id, product_id: product.product.id})">
 													<i class="icon-user"></i> Proveedores </a>
 											</li>
-											<li ng-hide="editing_mode">
+											<li>
 												<a href="#" data-target="#update_variant_modal" role="button" data-toggle="modal" ng-click="editing(v)">
 													<i class="icon-user"></i> Editar </a>
-											</li>
-											<li ng-show="editing_mode">
-												<a href="#" role="button"  ng-click="updateVariant($event, v, true)">
-													<i class="icon-user"></i> Guardar </a>
 											</li>
 										</ul>
 									</div>

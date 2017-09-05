@@ -27,7 +27,6 @@ angular.module('KanguDashboard', ["angucomplete-alt"]).controller('IncomeExpense
 		$http({method: 'POST', url: $rootScope.server()+'administration/income_expenses', data: register,
 			headers:{"Authorization":$rootScope.loadUser().token}
 		}).then(function successCallback(response) {
-			console.log(response.data);
 			toastr.success('Registro creado');
 		}, function errorCallback(response) {
 			toastr.error('Error completando accion');

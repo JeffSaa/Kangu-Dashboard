@@ -32,7 +32,7 @@ angular.module('KanguDashboard').controller('UserListController', function($root
 			headers:{"Authorization":$rootScope.loadUser().token}
 		}).then(function successCallback(response) {
 			toastr.success('Usuario registrado');
-			$scope.getUsers();
+			$scope.getUsers(0);
 		}, function errorCallback(response) {
 			toastr.error('Error registrando usuario');
 		});

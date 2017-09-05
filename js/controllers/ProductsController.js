@@ -45,7 +45,7 @@ angular.module('KanguDashboard').controller('ProductsController', function($root
 			headers:{"Authorization":$rootScope.loadUser().token}
 		}).then(function successCallback(response) {
 			toastr.success('Producto creado');
-			$scope.getProducts();
+			$scope.getProducts(0);
 		}, function errorCallback(response) {
 			toastr.error('Error obteniendo datos');
 		});

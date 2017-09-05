@@ -21,31 +21,8 @@
 			</button>
 			<ul class="dropdown-menu pull-right" role="menu">
 				<li>
-					<a href="#">
-						<i class="icon-user"></i> New User </a>
-				</li>
-				<li>
-					<a href="#">
-						<i class="icon-present"></i> New Event
-						<span class="badge badge-success">4</span>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<i class="icon-basket"></i> New order </a>
-				</li>
-				<li class="divider"> </li>
-				<li>
-					<a href="#">
-						<i class="icon-flag"></i> Pending Orders
-						<span class="badge badge-danger">4</span>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<i class="icon-users"></i> Pending Users
-						<span class="badge badge-warning">12</span>
-					</a>
+					<a href="#" ng-click="editMode()">
+						<i class="icon-user"></i> Edicion rapida </a>
 				</li>
 			</ul>
 		</div>
@@ -113,40 +90,51 @@
 								<th> Business (%) </th>
 								<th> Business ($) </th>
 								<th> B. Total </th>
-								<th> Medida </th>
-								<th> Cantidad Dflt </th>
-								<th> Descripcion </th>
-								<th> Iva (%) </th>
+								<th ng-hide="editing_mode"> Medida prom </th>
+								<th ng-hide="editing_mode"> Cantidad Dflt </th>
+								<th ng-hide="editing_mode"> Descripcion </th>
+								<th ng-hide="editing_mode"> Iva (%) </th>
 								<th> Actions </th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="odd gradeX" ng-repeat="v in product.variants">
+							<tr class="odd gradeX noPadding" ng-repeat="v in product.variants">
 								<td> {{v.name | capitalize}} </td>
-								<td> {{v.entry_price | currency:'$':0}} </td>
-								<td> {{v.natural_percent}} </td>
-								<td> {{v.natural_gain}} </td>
-								<td> {{getTotalPrice(v.entry_price, v.natural_percent, v.natural_gain) | currency:'$':0}} </td>
-								<td> {{v.business_percent}} </td>
-								<td> {{v.business_gain}} </td>
-								<td> {{getTotalPrice(v.entry_price, v.business_percent, v.business_gain) | currency:'$':0}} </td>
-								<td> {{v.unit_measurement}} </td>
-								<td> {{v.default_quantity}} </td>
-								<td> {{v.description | capitalize}} </td>
-								<td> {{v.iva}} </td>
+								<td ng-show="editing_mode"> <input type="number" class="edit_variant_quick" ng-model="v.t_entry_price"> </td>
+								<td ng-show="editing_mode"> <input type="number" class="edit_variant_quick" ng-model="v.t_natural_percent"> </td>
+								<td ng-show="editing_mode"> <input type="number" class="edit_variant_quick" ng-model="v.t_natural_gain"> </td>
+								<td ng-show="editing_mode"> {{getTotalPrice(v.t_entry_price, v.t_natural_percent, v.t_natural_gain) | currency:'$':0}} </td>
+								<td ng-show="editing_mode"> <input type="number" class="edit_variant_quick" ng-model="v.t_business_percent"> </td>
+								<td ng-show="editing_mode"> <input type="number" class="edit_variant_quick" ng-model="v.t_business_gain"> </td>
+								<td ng-show="editing_mode"> {{getTotalPrice(v.t_entry_price, v.t_natural_percent, v.t_natural_gain) | currency:'$':0}} </td>
+								<td ng-hide="editing_mode"> {{v.entry_price | currency:'$':0}} </td>
+								<td ng-hide="editing_mode"> {{v.natural_percent}} </td>
+								<td ng-hide="editing_mode"> {{v.natural_gain}} </td>
+								<td ng-hide="editing_mode"> {{getTotalPrice(v.entry_price, v.natural_percent, v.natural_gain) | currency:'$':0}} </td>
+								<td ng-hide="editing_mode"> {{v.business_percent}} </td>
+								<td ng-hide="editing_mode"> {{v.business_gain}} </td>
+								<td ng-hide="editing_mode"> {{getTotalPrice(v.entry_price, v.business_percent, v.business_gain) | currency:'$':0}} </td>
+								<td ng-hide="editing_mode"> {{v.unit_measurement}} </td>
+								<td ng-hide="editing_mode"> {{v.default_quantity}} </td>
+								<td ng-hide="editing_mode"> {{v.description | capitalize}} </td>
+								<td ng-hide="editing_mode"> {{v.iva}} </td>
 								<td>
 									<div class="btn-group">
 										<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
 											<i class="fa fa-angle-down"></i>
 										</button>
 										<ul class="dropdown-menu pull-left" role="menu">
-											<li>
+											<li ng-hide="editing_mode">
 												<a href="#" ui-sref="variant_providers({variant_id: v.id, product_id: product.product.id})">
 													<i class="icon-user"></i> Proveedores </a>
 											</li>
-											<li>
+											<li ng-hide="editing_mode">
 												<a href="#" data-target="#update_variant_modal" role="button" data-toggle="modal" ng-click="editing(v)">
 													<i class="icon-user"></i> Editar </a>
+											</li>
+											<li>
+												<a href="#" role="button"  ng-click="updateVariant($event, v, true)">
+													<i class="icon-user"></i> Guardar </a>
 											</li>
 										</ul>
 									</div>
@@ -264,7 +252,7 @@
 				<h4 class="modal-title">Actualizacion de variante</h4>
 			</div>
 			<div class="modal-body form">
-				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="updateVariant($event, temp_variant)">
+				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="updateVariant($event, temp_variant, false)">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="col-md-3 control-label">Nombre:</label>

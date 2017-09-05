@@ -1,0 +1,7 @@
+.edit_variant_quick{
+	max-width: 50%;
+}
+
+.noPadding td {padding: 0;}
+
+.noPadding td input {margin: 0;}

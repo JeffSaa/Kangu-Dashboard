@@ -474,6 +474,43 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 			}
 		})
 
+		// Income Expenses
+		.state('income_expenses', {
+			url: "/income_expenses",
+			templateUrl: "../views/income_expenses.html",            
+			data: {pageTitle: 'Ingresos-Egresos'},
+			controller: "IncomeExpensesController",
+			resolve: {
+				deps: ['$ocLazyLoad', function($ocLazyLoad) {
+					return $ocLazyLoad.load({
+						name: 'KanguDashboard',
+						insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+						files: [
+							'../assets/global/plugins/datatables/datatables.min.css', 
+							'../assets/pages/scripts/table-datatables-scroller.min.js',
+							'../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.css',
+
+							'../assets/global/plugins/datatables/datatables.all.min.js',
+
+							'../assets/pages/scripts/table-datatables-managed.min.js',
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+							'../assets/pages/scripts/ui-toastr.min.js',
+
+							'../assets/global/scripts/angucomplete-alt.js',						
+							'../assets/global/css/angucomplete-alt.css',
+
+							'../assets/pages/scripts/table-datatables-scroller.min.js',
+							
+							'../js/controllers/IncomeExpensesController.js',
+						] 
+					});
+				}]
+			}
+		})
+
 }]);
 
 /* Init global settings and run the app */

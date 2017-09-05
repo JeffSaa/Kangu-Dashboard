@@ -132,7 +132,7 @@
 												<a href="#" data-target="#update_variant_modal" role="button" data-toggle="modal" ng-click="editing(v)">
 													<i class="icon-user"></i> Editar </a>
 											</li>
-											<li>
+											<li ng-show="editing_mode">
 												<a href="#" role="button"  ng-click="updateVariant($event, v, true)">
 													<i class="icon-user"></i> Guardar </a>
 											</li>

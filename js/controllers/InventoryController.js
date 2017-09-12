@@ -42,6 +42,7 @@ angular.module('KanguDashboard', ["angucomplete-alt"]).controller('InventoryCont
 		$http({method: 'POST', url: $rootScope.server()+'administration/inventory_entry', data: entry,
 			headers:{"Authorization":$rootScope.loadUser().token}
 		}).then(function successCallback(response) {
+			console.log(response.data);
 			toastr.success('Entrada de inventario creada');
 		}, function errorCallback(response) {
 			toastr.error('Error completando accion');

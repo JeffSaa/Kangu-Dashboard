@@ -1,7 +1,9 @@
-.edit_variant_quick{
-	max-width: 50%;
-}
+.edit_variant_quick{max-width: 50%;}
 
 .noPadding td {padding: 0;}
 
 .noPadding td input {margin: 0;}
+
+.tiny_img{max-width: 80%;}
+
+.noPadding{padding: 0;}

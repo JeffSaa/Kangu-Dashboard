@@ -316,7 +316,7 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 			}
 		})
 
-		// Inventory
+		// Inventory entries
 		.state('inventory_menu', {
 			url: "/inventory",
 			templateUrl: "../views/inventory.html",            
@@ -330,6 +330,10 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 						files: [
 							'../assets/global/plugins/datatables/datatables.min.css', 
 							'../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
+
+							'../assets/global/plugins/jquery-notific8/jquery.notific8.min.css',
+							'../assets/global/plugins/jquery-notific8/jquery.notific8.min.js',
+							'../assets/pages/scripts/ui-notific8.min.js',
 
 							'../assets/global/plugins/bootstrap-toastr/toastr.min.css',
 
@@ -548,6 +552,80 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 			}
 		})
 
+		// Business Sucursal
+		.state('business_sucursal', {
+			url: "/business/:b_id/sucursals",
+			templateUrl: "../views/business_sucursal.html",            
+			data: {pageTitle: 'Negocios'},
+			controller: "BusinessSucursalController",
+			resolve: {
+				deps: ['$ocLazyLoad', function($ocLazyLoad) {
+					return $ocLazyLoad.load({
+						name: 'KanguDashboard',
+						insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+						files: [
+							'../assets/global/plugins/datatables/datatables.min.css', 
+							'../assets/pages/scripts/table-datatables-scroller.min.js',
+							'../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.css',
+
+							'../assets/global/plugins/datatables/datatables.all.min.js',
+
+							'../assets/pages/scripts/table-datatables-managed.min.js',
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+							'../assets/pages/scripts/ui-toastr.min.js',
+
+							'../assets/global/scripts/angucomplete-alt.js',						
+							'../assets/global/css/angucomplete-alt.css',
+
+							'../assets/pages/scripts/table-datatables-scroller.min.js',
+							
+							'../js/controllers/BusinessSucursalController.js',
+						] 
+					});
+				}]
+			}
+		})
+
+		// Create orden
+		.state('create_order', {
+			url: "/business/:b_id/order",
+			templateUrl: "../views/create_order.html",            
+			data: {pageTitle: 'Crear orden'},
+			controller: "CreateOrderController",
+			resolve: {
+				deps: ['$ocLazyLoad', function($ocLazyLoad) {
+					return $ocLazyLoad.load({
+						name: 'KanguDashboard',
+						insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+						files: [
+							'../assets/global/plugins/datatables/datatables.min.css', 
+							'../assets/pages/scripts/table-datatables-scroller.min.js',
+							'../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css',
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.css',
+
+							'../assets/global/plugins/datatables/datatables.all.min.js',
+
+							'../assets/pages/scripts/table-datatables-managed.min.js',
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+							'../assets/pages/scripts/ui-toastr.min.js',
+
+							'../assets/global/scripts/angucomplete-alt.js',						
+							'../assets/global/css/angucomplete-alt.css',
+
+							'../assets/pages/scripts/table-datatables-scroller.min.js',
+							
+							'../js/controllers/CreateOrderController.js',
+						] 
+					});
+				}]
+			}
+		})
+
 }]);
 
 /* Init global settings and run the app */
@@ -583,5 +661,8 @@ KanguDashboard.run(["$rootScope", "settings", "$state", function($rootScope, set
 		var w = window.open();
 		$(w.document.body).html(printContents);
 		w.print();
+	}
+	$rootScope.getTotalPrice = function(entry, percent, gain, quantity){ // get variant price
+		return (entry * percent / 100 + gain + entry) * quantity;
 	}
 }]);

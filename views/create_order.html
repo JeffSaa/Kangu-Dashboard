@@ -1,0 +1,175 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a ui-sref="dashboard_menu">Negocios</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a ui-sref="business_places">Negocios</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a ui-sref="business_sucursal({b_id: business.place.id})">{{business.place.name | capitalize}}</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a href="#">Crear orden</a>
+		</li>
+	</ul>
+	<div class="page-toolbar">
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true"> Actions
+				<i class="fa fa-angle-down"></i>
+			</button>
+			<ul class="dropdown-menu pull-right" role="menu">
+				<li>
+					<a href="#">
+						<i class="icon-user"></i> New User </a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="icon-present"></i> New Event
+						<span class="badge badge-success">4</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="icon-basket"></i> New order </a>
+				</li>
+				<li class="divider"> </li>
+				<li>
+					<a href="#">
+						<i class="icon-flag"></i> Pending Orders
+						<span class="badge badge-danger">4</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="icon-users"></i> Pending Users
+						<span class="badge badge-warning">12</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<h3 class="page-title"> Crear orden para {{business.place.name | capitalize}} </h3>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row">
+	<div class="col-md-12">
+		<!-- BEGIN EXAMPLE TABLE PORTLET-->
+		<div class="row">
+			<div class="col-md-7">
+				<div class="portlet light bordered">
+					<h3>Busqueda de variante</h3>
+					<div class="form-group">
+						<div class="input-icon input-icon-lg right">
+							<i class="fa fa-bell-o font-green"></i>
+							<input type="text" class="form-control input-lg" placeholder="Nombre de variante" ng-model="search_variant_txt" ng-change="search_variant(search_variant_txt)">
+						</div>
+					</div>
+					<ul class="list-group">
+						<li class="list-group-item" ng-repeat="v in variants">
+							<div class="row">
+								<div class="col-md-4">
+									<img class="tiny_img" ng-src="{{variantImageUrl(v.variant.original_image)}}" />
+								</div>
+								<div class="col-md-4">
+									<div class="row">
+										<h4>{{v.variant.name | capitalize}}</h4>
+									</div>
+									<div class="row">
+										<input type="text" placeholder="Comentario" ng-model="v.variant.comment">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Total: {{getTotalPrice(v.variant.entry_price,v.variant.business_percent,v.variant.business_gain, v.variant.quantity) | currency:'$':0}}</label>
+										<div class="row">
+											<div class="col-md-8 noPadding">
+												<div class="input-group input-group-sm">
+													<span ng-show="v.product.measurement_type == 1" class="input-group-addon">kg</span>
+													<span ng-show="v.product.measurement_type == 0" class="input-group-addon">lt</span>
+													<span ng-show="v.product.measurement_type == 2" class="input-group-addon">und</span>
+													<input type="number" min="0" class="form-control" placeholder="Cantidad" ng-model="v.variant.quantity">
+												</div>
+											</div>
+											<div class="col-md-4 noPadding">
+												<input type="submit" value="Add" ng-click="add2Cart(v.variant)">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-5">
+				<div class="portlet light bordered">
+					<div class="row">
+						<div class="col-md-5">
+							<h3>Carrito para </h3>
+						</div>
+						<div class="col-md-7">
+							<select class="form-control" ng-model="cart.target_id">
+								<option ng-repeat="bs in business.sucursals" value="{{bs.id}}">{{bs.name | capitalize}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-8">
+							<h4>Total de compra: {{cart.total | currency:'$':0}}</h4>
+						</div>
+						<div class="col-md-4">
+							<input type="button" value="Enviar" ng-click="create_order()">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<span>Fecha</span>
+							<input type="datetime-local" ng-model="cart.datehour_t">
+						</div>
+					</div>
+					<div class="row">
+						<ul class="list-group">
+							<li class="list-group-item" ng-repeat="v in cart.products">
+								<div class="row">
+									<div class="col-md-5">
+										<div class="row">
+											<div class="col-md-12">
+												<h5>{{v.name | capitalize}}</h5>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<input type="text" placeholder="Comentario" ng-model="v.comment">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-5">
+										<div class="form-group">
+											<label>Total: {{getTotalPrice(v.entry_price,v.business_percent,v.business_gain, v.quantity) | currency:'$':0}}</label>
+											<div class="input-group input-group-sm">
+												<span class="input-group-addon">qty</span>
+												<input type="number" min="0" class="form-control" placeholder="Cantidad" ng-model="v.quantity" ng-change="update_total()">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<input type="button" value="Del" ng-click="delFromCart($index)">
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END EXAMPLE TABLE PORTLET-->
+	</div>
+</div>
+<!-- END MAIN CONTENT -->

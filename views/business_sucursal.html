@@ -7,7 +7,11 @@
 			<i class="fa fa-angle-right"></i>
 		</li>
 		<li>
-			<a ui-sref="dashboard_menu">Negocios</a>
+			<a ui-sref="business_places">Negocios</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a href="#">{{business_place.place.name | capitalize}}</a>
 		</li>
 	</ul>
 	<div class="page-toolbar">
@@ -102,20 +106,18 @@
 						<thead class="flip-content">
 							<tr>
 								<th> Nombre </th>
-								<th> Plazo </th>
-								<th> Cupo </th>
-								<th> Deuda </th>
-								<th> C. activo </th>
+								<th> Direccion </th>
+								<th> Telefono </th>
+								<th> # Ordenes </th>
 								<th> Actions </th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="odd gradeX" ng-repeat="b in business_places">
+							<tr class="odd gradeX" ng-repeat="b in business_place.sucursals">
 								<td> {{b.name | capitalize}} </td>
-								<td> {{b.credit_term }} dias </td>
-								<td> {{b.credit_fit}} </td>
-								<td> {{b.current_deb | currency:'$':0}} </td>
-								<td> {{b.credit_active}} </td>
+								<td> {{b.address_description }} </td>
+								<td> {{b.phone}} </td>
+								<td> {{b.order_count}} </td>
 								<td>
 									<div class="btn-group">
 										<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
@@ -125,14 +127,6 @@
 											<li>
 												<a href="#" data-target="#businessupdater_modal" ng-click="selectBusiness(b)" data-toggle="modal">
 													<i class="icon-user"></i> Editar </a>
-											</li>
-											<li>
-												<a href="#" ui-sref="business_sucursal({b_id: b.id})">
-													<i class="icon-user"></i> Sucursales </a>
-											</li>
-											<li>
-												<a href="#" ui-sref="create_order({b_id: b.id})">
-													<i class="icon-user"></i> Crear orden </a>
 											</li>
 										</ul>
 									</div>

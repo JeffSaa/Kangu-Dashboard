@@ -1,0 +1,232 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a ui-sref="dashboard_menu">Home</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a ui-sref="business_places">Negocios</a>
+			<i class="fa fa-angle-right"></i>
+		</li>
+		<li>
+			<a href="#">{{business_place.place.name | capitalize}}</a>
+		</li>
+	</ul>
+	<div class="page-toolbar">
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true"> Actions
+				<i class="fa fa-angle-down"></i>
+			</button>
+			<ul class="dropdown-menu pull-right" role="menu">
+				<li>
+					<a href="#" ng-click="get_all()">
+						<i class="icon-user"></i> Actualizar </a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<h3 class="page-title"> Administracion de negocios</h3>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row">
+	<div class="col-md-3">
+		<div class="portlet light bordered">
+			<h4>Recividos</h4>
+			<ul class="noPadding"
+			dnd-list="orders.received"
+			dnd-drop="move_order(index, item, external, type, 0)">
+				<li class="list_none_style"
+					ng-repeat="o in orders.received"
+					dnd-draggable="o"
+					dnd-type="'0'"
+					dnd-effect-allowed="move"
+					ng-click="select_order(o)"
+					data-target="#show_order"
+					data-toggle="modal">
+					<div class="portlet-body">
+						<div class="well well-sm">
+							<h4>{{o.sucursal.name | capitalize}}</h4>
+							<h5>Total: {{o.order.total | currency:'$':0}}</h5>
+							<h5>Fecha: {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
+							<h5>{{o.products.length}} producto(s)</h5>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="portlet light bordered">
+			<h4>Comprando</h4>
+			<ul class="noPadding"
+			dnd-list="orders.shopping"
+			dnd-drop="move_order(index, item, external, type, 1)">
+				<li class="list_none_style"
+					ng-repeat="o in orders.shopping"
+					dnd-draggable="o"
+					dnd-type="'1'"
+					dnd-effect-allowed="move"
+					ng-click="select_order(o)"
+					data-target="#show_order"
+					data-toggle="modal">
+					<div class="portlet-body">
+						<div class="well well-sm">
+							<h4>{{o.sucursal.name | capitalize}}</h4>
+							<h5>Total: {{o.order.total | currency:'$':0}}</h5>
+							<h5>Fecha: {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
+							<h5>{{o.products.length}} producto(s)</h5>
+						</div>
+					</div>
+				</li>
+				<li class="list_none_style" ng-show="orders.shopping.length == 0">
+					<div class="portlet-body">
+						<div class="well well-sm">
+							<h4>Todo tranquilo aqui</h4>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="portlet light bordered">
+			<h4>Entregando</h4>
+			<ul class="noPadding"
+			dnd-list="orders.delivering"
+			dnd-drop="move_order(index, item, external, type, 2)">
+				<li class="list_none_style"
+					ng-repeat="o in orders.delivering"
+					dnd-draggable="o"
+					dnd-type="'2'"
+					dnd-effect-allowed="move"
+					ng-click="select_order(o)"
+					data-target="#show_order"
+					data-toggle="modal">
+					<div class="portlet-body">
+						<div class="well well-sm">
+							<h4>Orden #{{o.order.consecutive}}</h4>
+							<h5>{{o.sucursal.name | capitalize}}</h5>
+							<h5>Total: {{o.order.total | currency:'$':0}}</h5>
+							<h5>Fecha: {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
+						</div>
+					</div>
+				</li>
+				<li class="list_none_style" ng-show="orders.delivering.length == 0">
+					<div class="portlet-body">
+						<div class="well well-sm">
+							<h4>Todo tranquilo aqui</h4>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="portlet light bordered">
+			<h4>Completado</h4>
+			<ul class="noPadding"
+			dnd-list="orders.completed"
+			dnd-drop="move_order(index, item, external, type, 3)">
+				<li class="list_none_style"
+					ng-repeat="o in orders.completed"
+					dnd-draggable="o"
+					dnd-type="'3'"
+					dnd-effect-allowed="move"
+					ng-click="select_order(o)"
+					data-target="#show_order"
+					data-toggle="modal">
+					<div class="portlet-body">
+						<div class="well well-sm">
+							<h4>Orden #{{o.order.consecutive}}</h4>
+							<h5>{{o.sucursal.name | capitalize}}</h5>
+							<h5>Total: {{o.order.total | currency:'$':0}}</h5>
+							<h5>Fecha: {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
+						</div>
+					</div>
+				</li>
+				<li class="list_none_style" ng-show="orders.completed.length == 0">
+					<div class="portlet-body">
+						<div class="well well-sm">
+							<h4>Todo tranquilo aqui</h4>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END MAIN CONTENT -->
+<!-- BEGIN SHOW ORDER MODAL  -->
+<div id="show_order" class="modal fade" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Orden para {{order_selected.sucursal.name | capitalize}}</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row" ng-hide="order_selected.order.status == 0 || order_selected.order.status == 1">
+					<div class="col-md-12">
+						<h4>Orden #{{order_selected.order.consecutive}}</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h4>Fecha de entrega: {{order_selected.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h4>Precio total: {{order_selected.order.total | currency:'$':0}}</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h4>Productos({{order_selected.products.length}}):</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="list-group">
+							<li class="list-group-item" ng-repeat="p in order_selected.products">
+								<div class="row">
+									<div class="col-md-3">
+										<h5>{{p.variant.name | capitalize}}</h5>
+									</div>
+									<div class="col-md-3">
+										<h5 ng-show="p.product.measurement_type == 1">x{{p.order_product.quantity}}kg</h5>
+										<h5 ng-show="p.product.measurement_type == 0">x{{p.order_product.quantity}}lt</h5>
+										<h5 ng-show="p.product.measurement_type == 2">x{{p.order_product.quantity}}und</h5>
+									</div>
+									<div class="col-md-3">
+										<h5>{{p.order_product.price | currency:'$':0}}c/u</h5>
+									</div>
+									<div class="col-md-3">
+										<h5>{{p.order_product.price * p.order_product.quantity | currency:'$':0}} total</h5>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										Comentario: <i>{{p.order_product.comment | capitalize}}</i>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">
+						Cancelar
+					</button>
+					<button type="submit" class="btn btn-primary" ng-hide="order_selected.order.status == 0 || order_selected.order.status == 1" ng-click="savePDF(order_selected)">
+						<i class="fa fa-check"></i> Imprimir
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END SHOW ORDER MODAL  -->

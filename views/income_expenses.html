@@ -143,7 +143,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-				<h4 class="modal-title">Crear registro</h4>
+				<h4 class="modal-title">Generar movimiento de dinero</h4>
 			</div>
 			<div class="modal-body form">
 				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="createRegister($event, register)">
@@ -173,7 +173,16 @@
 							<label class="col-md-3 control-label">Tipo de area</label>
 							<div class="col-md-9">
 								<select class="form-control" ng-model="register.source_type">
-									<option value="0">Otros</option>
+									<option value="0" ng-show="register.mov_type == 0">Aporte de Socios</option>
+									<option value="1" ng-show="register.mov_type == 0">Recaudo de Ventas</option>
+									<option value="2" ng-show="register.mov_type == 0">Otros</option>
+									<option value="3" ng-show="register.mov_type == 1">Pago prov. Contado</option>
+									<option value="4" ng-show="register.mov_type == 1">Pago prov. Credito</option>
+									<option value="5" ng-show="register.mov_type == 1">Gastos operativos</option>
+									<option value="6" ng-show="register.mov_type == 1">Gastos de Nomina Operativa tiempo completo </option>
+									<option value="7" ng-show="register.mov_type == 1">Gastos de Nomina administrativa</option>
+									<option value="8" ng-show="register.mov_type == 1">Gastos de Nomina de desarrollo </option>
+									<option value="9" ng-show="register.mov_type == 1">Gastos Misc. Admin y Desarrollo</option>
 								</select>
 							</div>
 						</div>

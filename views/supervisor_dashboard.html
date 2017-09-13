@@ -47,11 +47,9 @@
 					data-target="#show_order"
 					data-toggle="modal">
 					<div class="portlet-body">
-						<div class="well well-sm">
-							<h4>{{o.sucursal.name | capitalize}}</h4>
-							<h5>Total: {{o.order.total | currency:'$':0}}</h5>
-							<h5>Fecha: {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
-							<h5>{{o.products.length}} producto(s)</h5>
+						<div class="well well-sm noMargin" style="padding:1%;">
+							<h5>{{o.sucursal.name | capitalize}}</h5>
+							<h5>{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
 					</div>
 				</li>
@@ -67,7 +65,7 @@
 	</div>
 	<div class="col-md-3">
 		<div class="portlet light bordered">
-			<h4>Comprando</h4>
+			<h4>Empacando</h4>
 			<ul class="noPadding"
 			dnd-list="orders.shopping"
 			dnd-drop="move_order(index, item, external, type, 1)">
@@ -80,11 +78,9 @@
 					data-target="#show_order"
 					data-toggle="modal">
 					<div class="portlet-body">
-						<div class="well well-sm">
-							<h4>{{o.sucursal.name | capitalize}}</h4>
-							<h5>Total: {{o.order.total | currency:'$':0}}</h5>
-							<h5>Fecha: {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
-							<h5>{{o.products.length}} producto(s)</h5>
+						<div class="well well-sm noMargin" style="padding:1%;">
+							<h5>{{o.sucursal.name | capitalize}}</h5>
+							<h5>{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
 					</div>
 				</li>
@@ -113,11 +109,9 @@
 					data-target="#show_order"
 					data-toggle="modal">
 					<div class="portlet-body">
-						<div class="well well-sm">
-							<h4>Orden #{{o.order.consecutive}}</h4>
+						<div class="well well-sm noMargin" style="padding:1%;">
 							<h5>{{o.sucursal.name | capitalize}}</h5>
-							<h5>Total: {{o.order.total | currency:'$':0}}</h5>
-							<h5>Fecha: {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
+							<h5>{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
 					</div>
 				</li>
@@ -146,11 +140,9 @@
 					data-target="#show_order"
 					data-toggle="modal">
 					<div class="portlet-body">
-						<div class="well well-sm">
-							<h4>Orden #{{o.order.consecutive}}</h4>
+						<div class="well well-sm noMargin" style="padding:1%;">
 							<h5>{{o.sucursal.name | capitalize}}</h5>
-							<h5>Total: {{o.order.total | currency:'$':0}}</h5>
-							<h5>Fecha: {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
+							<h5>{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
 					</div>
 				</li>
@@ -220,6 +212,12 @@
 										Comentario: <i>{{p.order_product.comment | capitalize}}</i>
 									</div>
 								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<button data-target="#edit_orderproduct" data-toggle="modal" ng-click="select_product(p);"><i class="icon-settings"/></button>
+										<button ng-click="delete_orderproduct(p.order_product, $index)"><i class="icon-trash"/></button>
+									</div>
+								</div>
 							</li>
 						</ul>
 					</div>
@@ -227,6 +225,9 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">
 						Cancelar
+					</button>
+					<button type="button" class="btn btn-primary" ng-show="order_selected.order.status == 0 || order_selected.order.status == 1" data-target="#add_orderproduct" data-toggle="modal">
+						Agregar un producto
 					</button>
 					<button type="submit" class="btn btn-primary" ng-hide="order_selected.order.status == 0 || order_selected.order.status == 1" ng-click="savePDF(order_selected)">
 						<i class="fa fa-check"></i> Imprimir
@@ -237,3 +238,109 @@
 	</div>
 </div>
 <!-- END SHOW ORDER MODAL  -->
+<!-- BEGIN ADD ORDER PRODUCT MODAL  -->
+<div id="add_orderproduct" class="modal fade" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Agregar una variante a la orden</h4>
+			</div>
+			<div class="modal-body form">
+				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="addVariant2Order($event, add_variant.model)">
+					<div class="form-body">
+						<div class="form-group">
+							<label class="col-md-3 control-label">Variante</label>
+							<div class="col-md-8">
+								<angucomplete-alt
+									id="providerId"
+									field-required="true"
+									input-name="provider"
+									placeholder="Busqueda de usuario"
+									pause="100"
+									selected-object="VariantSelected"
+									remote-api-handler="searchVariant"
+									title-field="variant.name"
+									minlength="1"
+									inputclass="form-control spinner" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Comentario</label>
+							<div class="col-md-8">
+								<input type="text" required class="form-control spinner" placeholder="Ej. quiero la manzana pequeña" ng-model="add_variant.model.comment">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Cantidad</label>
+							<div class="col-md-4">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon">kg</span>
+										<input type="number" min="0" required step="0.1" class="form-control" ng-model="add_variant.model.quantity">
+									</div>
+							</div>
+							<div class="col-md-4">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon">Total</span>
+										<input type="number" min="0" required step="0.1" class="form-control"
+										ng-value="{{getTotalPrice(product_selected.variant.entry_price,product_selected.variant.business_percent,product_selected.variant.business_gain, 1) | currency:'$':0}}">
+									</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary">
+							<i class="fa fa-check"></i> Registrar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END ADD ORDER PRODUCT MODAL  -->
+<!-- BEGIN EDIT ORDER PRODUCT MODAL  -->
+<div id="edit_orderproduct" class="modal fade" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Editar producto de orden</h4>
+			</div>
+			<div class="modal-body form">
+				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="update_orderproduct($event, product_selected)">
+					<div class="form-body">
+						<div class="form-group">
+							<label class="col-md-3 control-label">Comentario</label>
+							<div class="col-md-8">
+								<input type="text" required class="form-control spinner" placeholder="Ej. quiero la manzana pequeña" ng-model="product_selected.comment_t">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Cantidad</label>
+							<div class="col-md-4">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon">kg</span>
+									<input type="number" min="0" required step="0.1" class="form-control" ng-model="product_selected.quantity_t">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon">Total</span>
+									<input disabled type="text" class="form-control"
+									value="{{getTotalPrice(product_selected.variant.entry_price,product_selected.variant.business_percent,product_selected.variant.business_gain, product_selected.quantity_t) | currency:'$':0}}">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary">
+							<i class="fa fa-check"></i> Actualizar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END EDIT ORDER PRODUCT MODAL  -->

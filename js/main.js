@@ -648,6 +648,9 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 							
 							'../assets/global/scripts/vfs_fonts.js',
 							'../assets/global/scripts/pdfmake.min.js',
+
+							'../assets/global/scripts/angucomplete-alt.js',						
+							'../assets/global/css/angucomplete-alt.css',
 							
 							'../js/controllers/SupervisorDashboardController.js',
 						] 

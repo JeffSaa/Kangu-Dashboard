@@ -1,4 +1,4 @@
-angular.module('KanguDashboard', ["dndLists"]).controller('SupervisorDashboardController', function($rootScope, $scope, $http, $timeout, $filter) {
+angular.module('KanguDashboard', ["dndLists", "angucomplete-alt"]).controller('SupervisorDashboardController', function($rootScope, $scope, $http, $timeout, $filter) {
 	$scope.$on('$viewContentLoaded', function() {   
 		// initialize core components
 		App.initAjax();
@@ -11,6 +11,8 @@ angular.module('KanguDashboard', ["dndLists"]).controller('SupervisorDashboardCo
 
 	$scope.orders = {received: [], shopping: [], delivering: [], completed: [], disabled: []};
 	$scope.order_selected = {};
+	$scope.add_variant = {model: {}};
+	$scope.product_selected = {};
 
 	$scope.get_orders = function(status, model){
 		$http({method: 'GET', url: $rootScope.server()+'orders/orders', params: {status: status},
@@ -82,7 +84,7 @@ angular.module('KanguDashboard', ["dndLists"]).controller('SupervisorDashboardCo
 		});
 	}
 
-	$scope.savePDF = function(o, url){
+	$scope.savePDF = function(o){
 		var d = new Date();
 		d = d.getDate()+'-'+(d.getMonth()+1)+'-'+d.getFullYear();
 		var divider = {table:{widths:['*'],body:[[" "],[" "]]},layout:{
@@ -172,6 +174,73 @@ angular.module('KanguDashboard', ["dndLists"]).controller('SupervisorDashboardCo
 		};
 		pdfMake.createPdf(docDefinition).open();
 	}
+
+	$scope.delete_orderproduct = function(op, index){
+		$http({method: 'POST', url: $rootScope.server()+'orders/remove_product', data: op,
+			headers:{"Authorization":$rootScope.loadUser().token}
+		}).then(function successCallback(response) {
+			$scope.order_selected.products.splice(index, 1);
+			$scope.order_selected.order.total = response.data.total;
+		}, function errorCallback(response) {
+			toastr.error('Error obteniendo datos');
+		});
+	}
+
+	$scope.searchVariant = function(q, time){
+		return $http({method: 'GET', url: $rootScope.server()+'variants/search', params: {search: q},
+			headers:{"Authorization":$rootScope.loadUser().token}, timeout: time
+		});
+	}
+
+	$scope.VariantSelected = function($item){
+		$scope.add_variant.model.variant_id = $item.originalObject.variant.id;
+		toastr.info('Variante seleccionado');
+	}
+
+	$scope.update_order_selected = function(){
+		model = $scope.get_model_status($scope.order_selected.order.status);
+		model = [];
+		$scope.get_orders($scope.order_selected.order.status, model);
+	}
+
+	$scope.addVariant2Order = function($event, o){
+		if ($scope.add_variant.model.variant_id){
+			console.log(o);
+			o.order_id = $scope.order_selected.order.id;
+			$http({method: 'POST', url: $rootScope.server()+'orders/add_product', data: {model: o},
+				headers:{"Authorization":$rootScope.loadUser().token}
+			}).then(function successCallback(response) {
+				angular.copy(response.data, $scope.order_selected);
+				toastr.success('Variante agregada');
+				$scope.get_all();
+			}, function errorCallback(response) {
+				toastr.error('Error obteniendo datos');
+			});
+		}
+		else
+			toastr.error('Variante invalida');
+	}
+
+	$scope.select_product = function(p){
+		angular.copy(p, $scope.product_selected);
+		$scope.product_selected.comment_t = $scope.product_selected.order_product.comment;
+		$scope.product_selected.quantity_t = $scope.product_selected.order_product.quantity;
+	}
+
+	$scope.update_orderproduct = function($event, op){
+		$http({method: 'PUT', url: $rootScope.server()+'orders/update_product', data: {comment: op.comment_t, quantity: op.quantity_t,
+			id: $scope.product_selected.order_product.id},
+			headers:{"Authorization":$rootScope.loadUser().token}
+		}).then(function successCallback(response) {
+			$scope.order_selected = response.data;
+			toastr.success('Producto de orden actualizado');
+			$scope.get_all();
+		}, function errorCallback(response) {
+			toastr.error('Error obteniendo datos');
+		});
+	}
+
+	$scope.getTotalPrice = $rootScope.getTotalPrice;
 	
 	$scope.get_all();
 

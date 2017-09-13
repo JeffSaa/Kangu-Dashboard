@@ -36,17 +36,25 @@ angular.module('KanguDashboard', ["angucomplete-alt"]).controller('InventoryCont
 	}
 
 	$scope.saveEntries = function($event, entry){
+		sw = true;
 		for (var i = entry.entries.length - 1; i >= 0; i--) {
-			entry.entries[i].variant_id = entry.entries[i].variant.originalObject.variant.id;
+			if (entry.entries[i].variant)
+				entry.entries[i].variant_id = entry.entries[i].variant.originalObject.variant.id;
+			else{
+				toastr.error('Variante #'+(i+1)+' es invalida');
+				sw = false
+			}
 		}
-		$http({method: 'POST', url: $rootScope.server()+'administration/inventory_entry', data: entry,
-			headers:{"Authorization":$rootScope.loadUser().token}
-		}).then(function successCallback(response) {
-			console.log(response.data);
-			toastr.success('Entrada de inventario creada');
-		}, function errorCallback(response) {
-			toastr.error('Error completando accion');
-		});
+		if (sw) {
+			$http({method: 'POST', url: $rootScope.server()+'administration/inventory_entry', data: entry,
+				headers:{"Authorization":$rootScope.loadUser().token}
+			}).then(function successCallback(response) {
+				console.log(response.data);
+				toastr.success('Entrada de inventario creada');
+			}, function errorCallback(response) {
+				toastr.error('Error completando accion');
+			});
+		}
 		$event.target.submit();
 	}
 	

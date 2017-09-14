@@ -24,6 +24,10 @@
 					<a href="#" ng-click="get_all()">
 						<i class="icon-user"></i> Actualizar </a>
 				</li>
+				<li>
+					<a href="#" ng-click="get_dayshop()">
+						<i class="icon-user"></i> Consolidado </a>
+				</li>
 			</ul>
 		</div>
 	</div>
@@ -48,8 +52,8 @@
 					data-toggle="modal">
 					<div class="portlet-body">
 						<div class="well well-sm noMargin" style="padding:1%;">
-							<h5>{{o.sucursal.name | capitalize}}</h5>
-							<h5>{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
+							<h5 class="noMargin">{{o.sucursal.name | capitalize}}</h5>
+							<h5 class="noMargin">{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
 					</div>
 				</li>
@@ -79,8 +83,8 @@
 					data-toggle="modal">
 					<div class="portlet-body">
 						<div class="well well-sm noMargin" style="padding:1%;">
-							<h5>{{o.sucursal.name | capitalize}}</h5>
-							<h5>{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
+							<h5 class="noMargin">{{o.sucursal.name | capitalize}}</h5>
+							<h5 class="noMargin">{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
 					</div>
 				</li>
@@ -110,8 +114,8 @@
 					data-toggle="modal">
 					<div class="portlet-body">
 						<div class="well well-sm noMargin" style="padding:1%;">
-							<h5>{{o.sucursal.name | capitalize}}</h5>
-							<h5>{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
+							<h5 class="noMargin">{{o.sucursal.name | capitalize}}</h5>
+							<h5 class="noMargin">{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
 					</div>
 				</li>
@@ -141,8 +145,8 @@
 					data-toggle="modal">
 					<div class="portlet-body">
 						<div class="well well-sm noMargin" style="padding:1%;">
-							<h5>{{o.sucursal.name | capitalize}}</h5>
-							<h5>{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
+							<h5 class="noMargin">{{o.sucursal.name | capitalize}}</h5>
+							<h5 class="noMargin">{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
 					</div>
 				</li>
@@ -317,6 +321,15 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="col-md-3 control-label">Precio de entrada</label>
+							<div class="col-md-8">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon">$</span>
+									<input type="number" min="0" required step="0.1" class="form-control" ng-model="product_selected.price_t">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
 							<label class="col-md-3 control-label">Cantidad</label>
 							<div class="col-md-4">
 								<div class="input-group input-group-sm">
@@ -328,7 +341,7 @@
 								<div class="input-group input-group-sm">
 									<span class="input-group-addon">Total</span>
 									<input disabled type="text" class="form-control"
-									value="{{getTotalPrice(product_selected.variant.entry_price,product_selected.variant.business_percent,product_selected.variant.business_gain, product_selected.quantity_t) | currency:'$':0}}">
+									value="{{(product_selected.price_t * product_selected.quantity_t).toString() | currency:'$':0}}">
 								</div>
 							</div>
 						</div>

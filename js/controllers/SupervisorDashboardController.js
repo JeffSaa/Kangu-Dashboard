@@ -225,11 +225,12 @@ angular.module('KanguDashboard', ["dndLists", "angucomplete-alt"]).controller('S
 		angular.copy(p, $scope.product_selected);
 		$scope.product_selected.comment_t = $scope.product_selected.order_product.comment;
 		$scope.product_selected.quantity_t = $scope.product_selected.order_product.quantity;
+		$scope.product_selected.price_t = $scope.product_selected.order_product.price;
 	}
 
 	$scope.update_orderproduct = function($event, op){
 		$http({method: 'PUT', url: $rootScope.server()+'orders/update_product', data: {comment: op.comment_t, quantity: op.quantity_t,
-			id: $scope.product_selected.order_product.id},
+			id: $scope.product_selected.order_product.id, price: op.price_t},
 			headers:{"Authorization":$rootScope.loadUser().token}
 		}).then(function successCallback(response) {
 			$scope.order_selected = response.data;
@@ -238,6 +239,58 @@ angular.module('KanguDashboard', ["dndLists", "angucomplete-alt"]).controller('S
 		}, function errorCallback(response) {
 			toastr.error('Error obteniendo datos');
 		});
+	}
+
+	$scope.get_dayshop = function(){
+		$http({method: 'GET', url: $rootScope.server()+'orders/day_shop', headers:{"Authorization":$rootScope.loadUser().token}
+		}).then(function successCallback(response) {
+			$scope.generate_dayshop(response.data);
+		}, function errorCallback(response) {
+			toastr.error('Error obteniendo datos');
+		});
+	}
+
+	$scope.generate_dayshop = function(data){
+		var d = new Date();
+		d = d.getDate()+'-'+(d.getMonth()+1)+'-'+d.getFullYear();
+		var product_table = [[{text: 'PROD', style: 'tableHeader'}, {text: 'CANT', style: 'tableHeader'}, {text: 'UND', style: 'tableHeader'}]];
+		for (var i = data.length - 1; i >= 0; i--) {
+			q = data[i].quantity + '('+data[i].variant.variant_stock+')';
+			switch(data[i].product.measurement_type){
+				case 0:
+					u = 'Lb';
+					break;
+				case 1:
+					u = 'Kg';
+					break;
+				case 2:
+					u = 'Und';
+					break;
+			}
+			product_table.push([data[i].variant.name,q,u]);
+		}
+		var docDefinition = {
+			content: [
+				{
+					stack: [
+						'Kangu consolidado de compras',
+						{ text: d, style: 'subheader' }
+					], style: 'header'
+				},
+				{
+				style: 'tableExample',
+					table: {
+						widths: ['*', '*', '*'],
+						headerRows: 1,
+						body: product_table
+					},
+					layout: 'lightHorizontalLines'
+				}
+			],styles:{
+				header:{fontSize: 13, bold: true, alignment: 'center'}
+			}
+		};
+		pdfMake.createPdf(docDefinition).open();
 	}
 
 	$scope.getTotalPrice = $rootScope.getTotalPrice;

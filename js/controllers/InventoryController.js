@@ -49,8 +49,25 @@ angular.module('KanguDashboard', ["angucomplete-alt"]).controller('InventoryCont
 			$http({method: 'POST', url: $rootScope.server()+'administration/inventory_entry', data: entry,
 				headers:{"Authorization":$rootScope.loadUser().token}
 			}).then(function successCallback(response) {
-				console.log(response.data);
-				toastr.success('Entrada de inventario creada');
+				toastr.options = {
+					"closeButton": true,
+					"debug": false,
+					"newestOnTop": false,
+					"progressBar": false,
+					"positionClass": "toast-top-right",
+					"preventDuplicates": false,
+					"onclick": null,
+					"showDuration": "300",
+					"hideDuration": "1000",
+					"timeOut": 0,
+					"extendedTimeOut": 0,
+					"showEasing": "swing",
+					"hideEasing": "linear",
+					"showMethod": "fadeIn",
+					"hideMethod": "fadeOut",
+					"tapToDismiss": false
+				}
+				toastr.success('Entrada de inventario creada No. '+response.data.group.id);
 			}, function errorCallback(response) {
 				toastr.error('Error completando accion');
 			});

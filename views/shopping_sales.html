@@ -62,16 +62,16 @@
 				<div class="actions">
 					<div class="inbox-body">
 						<div class="inbox-header">
-							<form class="form-inline pull-right" action="index.html">
+							<div class="form-inline pull-right" action="index.html">
 								<div class="input-group input-medium">
-									<input type="text" class="form-control" placeholder="Email">
+									<input type="date" class="form-control" ng-model="date_target">
 									<span class="input-group-btn">
-										<button type="submit" class="btn green">
+										<button type="submit" class="btn green" ng-click="get_movements(date_target)">
 											<i class="fa fa-search"></i>
 										</button>
 									</span>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
 				</div>

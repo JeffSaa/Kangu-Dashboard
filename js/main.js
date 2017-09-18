@@ -5,10 +5,10 @@ KanguDashboard AngularJS App Main Script
 /* KanguDashboard App */
 var KanguDashboard = angular.module("KanguDashboard", [
 	"ui.router", 
-	"ui.bootstrap", 
-	"oc.lazyLoad",  
+	"ui.bootstrap",
+	"oc.lazyLoad",
 	"ngSanitize"
-]); 
+]);
 
 /* Configure ocLazyLoader(refer: https://github.com/ocombe/ocLazyLoad) */
 KanguDashboard.config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {

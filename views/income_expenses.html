@@ -62,16 +62,16 @@
 				<div class="actions">
 					<div class="inbox-body">
 						<div class="inbox-header">
-							<form class="form-inline pull-right" action="index.html">
+							<div class="form-inline pull-right" action="index.html">
 								<div class="input-group input-medium">
-									<input type="text" class="form-control" placeholder="Email">
+									<input type="date" class="form-control" ng-model="get_date">
 									<span class="input-group-btn">
-										<button type="submit" class="btn green">
+										<button class="btn green" ng-click="get_movements(get_date)">
 											<i class="fa fa-search"></i>
 										</button>
 									</span>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -84,53 +84,46 @@
 								<a href="#" data-target="#create_ie_modal" role="button" class="btn sbold green" data-toggle="modal"> Add new <i class="fa fa-plus"></i> </a>								
 							</div>
 						</div>
-						<!--div class="col-md-6">
-							<div class="pagination-control pull-right">
-								<span class="pagination-info"> {{headers.current_page}} of {{headers.pages_count}} page(s)</span>
-								<a class="btn btn-sm blue btn-outline" ng-click="getUsers(-1)">
-									<i class="fa fa-angle-left"></i>
-								</a>
-								<a class="btn btn-sm blue btn-outline" ng-click="getUsers(1)">
-									<i class="fa fa-angle-right"></i>
-								</a>
-							</div>
-						</div-->
 					</div>
 				</div>
-				<!--div class="portlet-body flip-scroll">
+				<div class="portlet-body flip-scroll">
 					<table class="table table-striped table-bordered table-hover table-checkable order-column flip-content">
 						<thead class="flip-content">
 							<tr>
-								<th> Email </th>
-								<th> Nombre </th>
-								<th> Apellido </th>
-								<th> Telefono </th>
-								<th> Actions </th>
+								<th> Fecha </th>
+								<th> Valor </th>
+								<th> Tipo </th>
+								<th> Area </th>
+								<th> Cuenta destino </th>
+								<th> Balance de cuenta </th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="odd gradeX" ng-repeat="user in users">
-								<td> {{user.email | limitTo: 16}} </td>
-								<td> {{user.name | capitalize}} </td>
-								<td> {{user.lastname | capitalize}} </td>
-								<td> {{user.phone}} </td>
-								<td>
-									<div class="btn-group">
-										<button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-											<i class="fa fa-angle-down"></i>
-										</button>
-										<ul class="dropdown-menu pull-left" role="menu">
-											<li>
-												<a href="#" data-target="#charge_modal" ng-click="selectUser(user)" data-toggle="modal">
-													<i class="icon-user"></i> Crear cargo </a>
-											</li>
-										</ul>
-									</div>
-								</td>
+							<tr class="odd gradeX" ng-repeat="m in movements">
+								<td> {{m.date | date:'dd/MM/yyyy'}} </td>
+								<td> {{m.total | currency:'$':0}} </td>
+								<td ng-hide="m.mov_type == 1"> Ingreso </td>
+								<td ng-show="m.mov_type == 1"> Egreso </td>
+								<td ng-show="m.source_type == 0"> Aporte de socios </td>
+								<td ng-show="m.source_type == 1"> Recaudo de ventas </td>
+								<td ng-show="m.source_type == 2"> PENDIENTE </td>
+								<td ng-show="m.source_type == 3"> Prov. Contado </td>
+								<td ng-show="m.source_type == 4"> Prov. Credito </td>
+								<td ng-show="m.source_type == 5"> Gastos operativos </td>
+								<td ng-show="m.source_type == 6"> Nomina operativa </td>
+								<td ng-show="m.source_type == 7"> Nomina administra </td>
+								<td ng-show="m.source_type == 8"> Nomina desarrollo </td>
+								<td ng-show="m.source_type == 9"> Gastos Mis,Admin,D </td>
+								<td ng-show="m.cash_id == 0"> Caja menor </td>
+								<td ng-show="m.cash_id == 1"> Caja mayor </td>
+								<td ng-show="m.cash_id == 2"> Bancolombia ahorros </td>
+								<td ng-show="m.cash_id == 3"> Bancolombia corriente </td>
+								<td ng-show="m.cash_id == 4"> Otros </td>
+								<td> {{m.cash_balance | currency:'$':0}} </td>
 							</tr>							
 						</tbody>
 					</table>
-				</div-->
+				</div>
 			</div>
 		</div>
 		<!-- END EXAMPLE TABLE PORTLET-->
@@ -225,7 +218,19 @@
 									inputclass="form-control spinner"
 									ng-show="register.third_type == 0"/>
 							</div>
-						</div>				
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Caja</label>
+							<div class="col-md-9">
+								<select class="form-control" ng-model="register.third_type">
+									<option value="0">Caja menor</option>
+									<option value="1">Caja mayor</option>
+									<option value="1">Bancolombia ahorros</option>
+									<option value="1">Bancolombia corriente</option>
+									<option value="1">Otros</option>
+								</select>
+							</div>
+						</div>					
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

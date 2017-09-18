@@ -10,6 +10,7 @@ angular.module('KanguDashboard', ["angucomplete-alt"]).controller('IncomeExpense
 	$rootScope.settings.layout.pageSidebarClosed = false;
 
 	$scope.register = {date: new Date()};
+	$scope.get_date = new Date();
 
 	$scope.searchUser = function(q, time){
 		return $http({method: 'GET', url: $rootScope.server()+'users/search', params: {search: q},
@@ -37,6 +38,16 @@ angular.module('KanguDashboard', ["angucomplete-alt"]).controller('IncomeExpense
 	$scope.ThirdSelected = function($item){
 		$scope.register.third_id = $item.originalObject.id;
 		toastr.info('Tercero seleccionado');
+	}
+
+	$scope.get_movements = function(date){
+		$http({method: 'GET', url: $rootScope.server()+'administration/income_expenses_movements', params: {date: date},
+			headers:{"Authorization":$rootScope.loadUser().token}
+		}).then(function successCallback(response) {
+			$scope.movements = response.data;
+		}, function errorCallback(response) {
+			toastr.error('Error completando accion');
+		});
 	}
 	
 });

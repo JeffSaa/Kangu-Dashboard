@@ -27,19 +27,19 @@
 			</form>
 			<!-- END RESPONSIVE QUICK SEARCH FORM -->
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" ng-show="validateMenu(1)">
 			<a ui-sref="users_menu12">
 				<i class="icon-home"></i>
 				<span class="title">Dashboard</span>
 			</a>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" ng-show="validateMenu(1)">
 			<a ui-sref="supervisor_dashboard">
 				<i class="icon-home"></i>
 				<span class="title">Pedidos</span>
 			</a>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" ng-show="validateMenu(1)">
 			<a class="nav-link nav-toggle">
 				<i class="icon-home"></i>
 				<span class="title">Inventario</span>
@@ -58,25 +58,44 @@
 				</li>
 			</ul>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" ng-show="validateMenu(1)">
 			<a ui-sref="users_menu">
 				<i class="icon-home"></i>
 				<span class="title">Manejo de personal</span>
 			</a>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" ng-show="validateMenu(1)">
 			<a ui-sref="users_menu">
 				<i class="icon-home"></i>
 				<span class="title">Caja y cuentas</span>
 			</a>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" ng-show="validateMenu(1)">
+			<a class="nav-link nav-toggle">
+				<i class="icon-home"></i>
+				<span class="title">Estado de cuentas</span>
+				<span class="arrow"></span>
+			</a>
+			<ul class="sub-menu">
+				<li>
+					<a ui-sref="inventory_menu123">
+						<i class="icon-puzzle"></i> Proveedores</span>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="shopping_sales123">
+						<i class="icon-paper-clip"></i> Clientes</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li class="nav-item" ng-show="validateMenu(0)">
 			<a ui-sref="users_menu">
 				<i class="icon-home"></i>
 				<span class="title">Dashboard</span>
 			</a>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" ng-show="validateMenu(0)">
 			<a class="nav-link nav-toggle">
 				<i class="icon-home"></i>
 				<span class="title">CDD</span>
@@ -120,7 +139,7 @@
 				</li>
 			</ul>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" ng-show="validateMenu(0)">
 			<a class="nav-link nav-toggle">
 				<i class="icon-home"></i>
 				<span class="title">Merchandising</span>
@@ -144,7 +163,7 @@
 				</li>
 			</ul>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" ng-show="validateMenu(0)">
 			<a class="nav-link nav-toggle">
 				<i class="icon-home"></i>
 				<span class="title">Usuarios</span>
@@ -173,7 +192,7 @@
 				</li>
 			</ul>
 		</li>
-		<li class="nav-item">
+		<li class="nav-item" ng-show="validateMenu(0)">
 			<a class="nav-link nav-toggle">
 				<i class="icon-home"></i>
 				<span class="title">Info y analisis</span>

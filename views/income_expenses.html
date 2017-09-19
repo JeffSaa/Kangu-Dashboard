@@ -179,7 +179,7 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
+						<div class="form-group" ng-hide="register.source_type == 1 || register.source_type == 3 || register.source_type == 4">
 							<label class="col-md-3 control-label">Tipo de tercero</label>
 							<div class="col-md-9">
 								<select class="form-control" ng-model="register.third_type">
@@ -217,14 +217,34 @@
 									minlength="1"
 									inputclass="form-control spinner"
 									ng-show="register.third_type == 0"/>
+								<angucomplete-alt
+									id="providerId"
+									field-required="true"
+									input-name="provider"
+									placeholder="Busqueda de proveedor"
+									pause="100"
+									selected-object="providerSelected"
+									remote-api-handler="searchProvider"
+									title-field="provider.name"
+									minlength="1"
+									inputclass="form-control spinner"
+									ng-show="register.source_type == 3 || register.source_type == 4"/>
+									<div class="input-group" style="text-align:left" ng-show="register.source_type == 1">
+										<input type="text" class="form-control" ng-model="search_consecutive">
+										<span class="input-group-btn">
+											<a href="javascript:;" class="btn green" ng-click="search_order(search_consecutive)">
+												<i class="fa fa-check"></i> Check </a>
+										</span>
+									</div>
+									<div class="help-block" ng-show="target_order.order && register.source_type == 1"> Orden de {{target_order.order.total | currency:'$':0}} a {{target_order.sucursal.name | capitalize}} </div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-md-3 control-label">Caja</label>
 							<div class="col-md-9">
 								<select class="form-control" ng-model="register.third_type">
-									<option value="0">Caja menor</option>
-									<option value="1">Caja mayor</option>
+									<option value="0">Caja bodega</option>
+									<option value="1">Caja Ernesto</option>
 									<option value="1">Bancolombia ahorros</option>
 									<option value="1">Bancolombia corriente</option>
 									<option value="1">Otros</option>

@@ -49,5 +49,27 @@ angular.module('KanguDashboard', ["angucomplete-alt"]).controller('IncomeExpense
 			toastr.error('Error completando accion');
 		});
 	}
+
+	$scope.search_order = function(c){
+    	$http({method: 'GET', url: $rootScope.server()+'orders/find_by_consecutive', params:{consecutive: c},
+    		headers:{"Authorization":$rootScope.loadUser().token}
+		}).then(function successCallback(response) {
+			$scope.target_order = response.data;
+			toastr.info('Orden encontrada');
+		}, function errorCallback(response) {
+			$scope.target_order = {};
+			toastr.error('Orden no encontrada');
+		});
+    }
+
+    $scope.searchProvider = function(q, time){
+		return $http({method: 'GET', url: $rootScope.server()+'providers/search', params: {search: q},
+			headers:{"Authorization":$rootScope.loadUser().token}, timeout: time
+		});
+	}
+
+	$scope.providerSelected = function($item){
+		$scope.register.third_id = $item.originalObject.provider.id;
+	}
 	
 });

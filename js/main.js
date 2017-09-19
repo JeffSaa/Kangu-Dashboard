@@ -764,4 +764,10 @@ KanguDashboard.run(["$rootScope", "settings", "$state", function($rootScope, set
 	$rootScope.getTotalPrice = function(entry, percent, gain, quantity){ // get variant price
 		return (entry * percent / 100 + gain + entry) * quantity;
 	}
+	$rootScope.validateMenu = function(charge){
+		if (charge == 0)
+			return $rootScope.loadUser().isKanguAdmin;
+		else
+			return $rootScope.loadUser().isKanguSupervisor;
+	}
 }]);

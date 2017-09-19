@@ -19,6 +19,18 @@ angular.module('KanguDashboard').controller('BusinessSucursalController', functi
 		});
 	}
 
+	$scope.createBusiness = function($event, b){
+		b.business_id = $stateParams.b_id;
+		$http({method: 'POST', url: $rootScope.server()+'businesssucursal/businesssucursal', data: b,
+				headers:{"Authorization":$rootScope.loadUser().token}
+		}).then(function successCallback(response) {
+			toastr.success('Sucursal creada');
+			$scope.showBusinessPlace();
+		}, function errorCallback(response) {
+			toastr.error('Error obteniendo datos');
+		});
+	}
+
 	$scope.showBusinessPlace();
 	
 });

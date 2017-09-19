@@ -147,7 +147,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-				<h4 class="modal-title">Creacion de negocio</h4>
+				<h4 class="modal-title">Creacion de sucursal</h4>
 			</div>
 			<div class="modal-body form">
 				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="createBusiness($event, business)">
@@ -158,46 +158,14 @@
 								<input type="text" required class="form-control spinner" placeholder="Ej. jeff's" ng-model="business.name"> </div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">Nit</label>
+							<label class="col-md-3 control-label">Telefono</label>
 							<div class="col-md-8">
-								<input type="text" required class="form-control spinner" placeholder="Ej. 91237712-1" ng-model="business.nit"> </div>
+								<input type="number" required class="form-control spinner" placeholder="Ej. jeff's" ng-model="business.phone"> </div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">Usuario</label>
+							<label class="col-md-3 control-label">Direccion</label>
 							<div class="col-md-8">
-								<angucomplete-alt
-									id="providerId"
-									field-required="true"
-									input-name="provider"
-									placeholder="Busqueda de usuario"
-									pause="100"
-									selected-object="UserSelected"
-									remote-api-handler="searchUser"
-									title-field="name"
-									description-field="lastname"
-									minlength="1"
-									inputclass="form-control spinner"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-3 control-label">Plazo de pago</label>
-							<div class="col-md-8">
-								<input type="number" required class="form-control spinner" placeholder="Ej. 3" ng-model="business.credit_term"> </div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-3 control-label">Cupo de credito</label>
-							<div class="col-md-8">
-								<input type="number" required class="form-control spinner" placeholder="Ej. 120400" ng-model="business.credit_fit"> </div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-3 control-label">Deuda actual</label>
-							<div class="col-md-8">
-								<input type="number" required class="form-control spinner" placeholder="Ej. 123002" ng-model="business.current_deb"> </div>
-						</div>
-						<div class="form-group">
-							<label class="col-md-3 control-label">Credito activo?</label>
-							<div class="col-md-8">
-								<input type="checkbox" class="form-control spinner" ng-model="business.credit_active"> </div>
+								<input type="text" required class="form-control spinner" placeholder="Ej. jeff's" ng-model="business.address_description"> </div>
 						</div>
 					</div>
 					<div class="modal-footer">

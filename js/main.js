@@ -725,6 +725,39 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 			}
 		})
 
+		// Product Variants
+		.state('product_variants', {
+			url: "/product_variants",
+			templateUrl: "../views/product_variants.html",            
+			data: {pageTitle: 'Supervisor Dashboard'},
+			controller: "ProductVariantsController",
+			resolve: {
+				deps: ['$ocLazyLoad', function($ocLazyLoad) {
+					return $ocLazyLoad.load({
+						name: 'KanguDashboard',
+						insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+						files: [
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.css',
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+							'../assets/pages/scripts/ui-toastr.min.js',
+
+							'../assets/global/scripts/angular-drag-and-drop-lists.min.js',
+							
+							'../assets/global/scripts/vfs_fonts.js',
+							'../assets/global/scripts/pdfmake.min.js',
+
+							'../assets/global/scripts/angucomplete-alt.js',						
+							'../assets/global/css/angucomplete-alt.css',
+							
+							'../js/controllers/ProductVariantsController.js',
+						] 
+					});
+				}]
+			}
+		})
+
 }]);
 
 /* Init global settings and run the app */

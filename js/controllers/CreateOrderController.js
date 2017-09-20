@@ -37,7 +37,7 @@ angular.module('KanguDashboard').controller('CreateOrderController', function($r
 			angular.copy(v, temp);
 			temp.variant_id = temp.id;
 			$scope.cart.products.push(temp);
-			$scope.cart.total += $scope.getTotalPrice(temp.entry_price,temp.business_percent,temp.business_gain, temp.quantity);
+			$scope.cart.total += temp.business_price;
 			toastr.info('Agregado al carrito');
 		}
 	}
@@ -51,7 +51,7 @@ angular.module('KanguDashboard').controller('CreateOrderController', function($r
 		$scope.cart.total = 0;
 		for (var i = $scope.cart.products.length - 1; i >= 0; i--) {
 			var temp = $scope.cart.products[i];
-			$scope.cart.total += $scope.getTotalPrice(temp.entry_price,temp.business_percent,temp.business_gain, temp.quantity);
+			$scope.cart.total += temp.business_price;
 		}
 	}
 

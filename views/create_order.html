@@ -87,7 +87,7 @@
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>Total: {{getTotalPrice(v.variant.entry_price,v.variant.business_percent,v.variant.business_gain, v.variant.quantity) | currency:'$':0}}</label>
+										<label>Total: {{(v.variant.business_price * v.variant.quantity) | currency:'$':0}}</label>
 										<div class="row">
 											<div class="col-md-8 noPadding">
 												<div class="input-group input-group-sm">
@@ -152,7 +152,7 @@
 									</div>
 									<div class="col-md-5">
 										<div class="form-group">
-											<label>Total: {{getTotalPrice(v.entry_price,v.business_percent,v.business_gain, v.quantity) | currency:'$':0}}</label>
+											<label>Total: {{(v.business_price * v.quantity) | currency:'$':0}}</label>
 											<div class="input-group input-group-sm">
 												<span class="input-group-addon">qty</span>
 												<input type="number" min="0" class="form-control" placeholder="Cantidad" ng-model="v.quantity" ng-change="update_total()">

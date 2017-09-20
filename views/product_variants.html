@@ -81,7 +81,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="btn-group">
-								<a href="#" data-target="#register_modal" role="button" class="btn sbold green" data-toggle="modal"> Add new <i class="fa fa-plus"></i> </a>								
+								<a href="#" data-target="#create_variant_modal" role="button" class="btn sbold green" data-toggle="modal"> Add new <i class="fa fa-plus"></i> </a>								
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -129,54 +129,106 @@
 	</div>
 </div>
 <!-- END MAIN CONTENT -->
-<!-- BEGIN CREATE PRODUCT MODAL  -->
-<div id="register_modal" class="modal fade" role="dialog" aria-hidden="true">
+<!-- BEGIN CREATE PRODUCTVARIANT MODAL  -->
+<div id="create_variant_modal" class="modal fade" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-				<h4 class="modal-title">Creacion de productos</h4>
+				<h4 class="modal-title">Creacion de variante</h4>
 			</div>
 			<div class="modal-body form">
-				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="createProduct($event, product)">
+				<form action="javascript:;" method="post" class="form-horizontal" ng-submit="createVariant($event, variant)">
 					<div class="form-body">
 						<div class="form-group">
-							<label class="col-md-3 control-label">Nombre</label>
+							<label class="col-md-3 control-label">Nombre:</label>
 							<div class="col-md-8">
-								<input type="text" required class="form-control spinner" placeholder="Ej. Papa" ng-model="product.name"> </div>
+								<input type="text" required class="form-control spinner" placeholder="Ej. Papa" ng-model="variant.name"> </div>
+						</div>
+						<div class="form-body">
+							<div class="form-group">
+								<label class="col-md-3 control-label">Producto</label>
+								<div class="col-md-8">
+									<angucomplete-alt
+										id="providerId"
+										field-required="true"
+										input-name="provider"
+										placeholder="Busqueda de producto"
+										pause="100"
+										selected-object="ProductSelected"
+										remote-api-handler="searchProduct"
+										title-field="name"
+										description-field="lastname"
+										minlength="1"
+										inputclass="form-control spinner"/>
+								</div>
+							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">Tipo de medida</label>
-							<select class="fcol-md-8" ng-model="product.measurement_type">
-								<option value="1">Kg</option>
-								<option value="0">Lt</option>
-							</select>
+							<label class="col-md-3 control-label">Precio entrada:</label>
+							<div class="col-md-8">
+								<input type="number" step="0.1" required class="form-control spinner" placeholder="Ej. $130" ng-model="variant.entry_price">
+							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-md-3 control-label">Subcategoria</label>
+							<label class="col-md-3 control-label">Precio Hogares:</label>
 							<div class="col-md-8">
-								<angucomplete-alt
-									id="providerId"
-									field-required="true"
-									input-name="provider"
-									placeholder="Busqueda de subcategoria"
-									pause="100"
-									selected-object="SubcategorieSelected"
-									remote-api-handler="searchSubcategorie"
-									title-field="name"
-									minlength="1"
-									inputclass="form-control spinner"/>
+								<input type="number" step="0.1" required class="form-control spinner" placeholder="Ej. $130" ng-model="variant.natural_price">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Precio Negocios:</label>
+							<div class="col-md-8">
+								<input type="number" step="0.1" required class="form-control spinner" placeholder="Ej. $130" ng-model="variant.business_price">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Peso unidad:</label>
+							<div class="col-md-8">
+								<input type="number" step="0.1" required class="form-control spinner" placeholder="Ej. 3" ng-model="variant.unit_measurement">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Cantidad default:</label>
+							<div class="col-md-8">
+								<input type="number" required class="form-control spinner" placeholder="Ej. 4" ng-model="variant.default_quantity">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">IVA:</label>
+							<div class="col-md-8">
+								<input type="number" min="0" required class="form-control spinner" placeholder="Ej. 5" ng-model="variant.iva">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Descripcion:</label>
+							<div class="col-md-8">
+								<input type="text" required class="form-control spinner" placeholder="Ej. 5 por lata" ng-model="variant.description">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-md-3 control-label">Imagen</label>
+							<div class="col-md-8">
+									<div ng-hide="variant.photo" class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+										<img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" />
+									</div>
+									<img ng-show="variant.photo" class="fileinput-preview thumbnail" ngf-thumbnail="variant.photo" style="max-width: 200px; max-height: 150px;"> </img>
+									<div>
+										<div class="btn default btn-file" ngf-select ng-model="variant.photo" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-resize-if="false">
+											Select image
+										</div>
+									</div>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 						<button type="submit" class="btn btn-primary">
-							<i class="fa fa-check"></i> Registrar</button>
+							<i class="fa fa-check"></i> Crear</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
-<!-- END CREATE PRODUCT MODAL  -->
+<!-- END CREATE PRODUCTVARIANT MODAL  -->

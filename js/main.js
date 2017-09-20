@@ -750,6 +750,10 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 
 							'../assets/global/scripts/angucomplete-alt.js',						
 							'../assets/global/css/angucomplete-alt.css',
+
+							'../assets/global/scripts/FileAPI.min.js',
+							'../assets/global/scripts/ng-file-upload-shim.min.js',
+							'../assets/global/scripts/ng-file-upload.min.js',
 							
 							'../js/controllers/ProductVariantsController.js',
 						] 

@@ -37,7 +37,7 @@ angular.module('KanguDashboard').controller('CreateOrderController', function($r
 			angular.copy(v, temp);
 			temp.variant_id = temp.id;
 			$scope.cart.products.push(temp);
-			$scope.cart.total += temp.business_price;
+			$scope.cart.total += temp.business_price * temp.quantity;
 			toastr.info('Agregado al carrito');
 		}
 	}

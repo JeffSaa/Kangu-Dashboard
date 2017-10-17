@@ -762,6 +762,41 @@ KanguDashboard.config(['$stateProvider', '$urlRouterProvider', function($statePr
 			}
 		})
 
+		// CDD Chooser
+		.state('cdd_chooser', {
+			url: "/cdd_chooser",
+			templateUrl: "../views/cdd_chooser.html",            
+			data: {pageTitle: 'Supervisor Dashboard'},
+			controller: "CddChooserController",
+			resolve: {
+				deps: ['$ocLazyLoad', function($ocLazyLoad) {
+					return $ocLazyLoad.load({
+						name: 'KanguDashboard',
+						insertBefore: '#ng_load_plugins_before', // load the above css files before a LINK element with this ID. Dynamic CSS files must be loaded between core and theme css files
+						files: [
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.css',
+
+							'../assets/global/plugins/bootstrap-toastr/toastr.min.js',
+							'../assets/pages/scripts/ui-toastr.min.js',
+							
+							'../assets/global/scripts/vfs_fonts.js',
+							'../assets/global/scripts/pdfmake.min.js',
+
+							'../assets/global/scripts/angucomplete-alt.js',						
+							'../assets/global/css/angucomplete-alt.css',
+
+							'../assets/global/scripts/FileAPI.min.js',
+							'../assets/global/scripts/ng-file-upload-shim.min.js',
+							'../assets/global/scripts/ng-file-upload.min.js',
+							
+							'../js/controllers/CddChooserController.js',
+						] 
+					});
+				}]
+			}
+		})
+
 }]);
 
 /* Init global settings and run the app */

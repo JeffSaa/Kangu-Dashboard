@@ -1,0 +1,97 @@
+<!-- BEGIN PAGE HEADER-->
+<div class="page-bar">
+	<ul class="page-breadcrumb">
+		<li>
+			<i class="fa fa-home"></i>
+			<a ui-sref="dashboard_menu">Home</a>
+		</li>
+	</ul>
+	<div class="page-toolbar">
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true"> Actions
+				<i class="fa fa-angle-down"></i>
+			</button>
+			<ul class="dropdown-menu pull-right" role="menu">
+				<li>
+					<a href="#">
+						<i class="icon-user"></i> New User </a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="icon-present"></i> New Event
+						<span class="badge badge-success">4</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="icon-basket"></i> New order </a>
+				</li>
+				<li class="divider"> </li>
+				<li>
+					<a href="#">
+						<i class="icon-flag"></i> Pending Orders
+						<span class="badge badge-danger">4</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="icon-users"></i> Pending Users
+						<span class="badge badge-warning">12</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<h3 class="page-title"> Administracion de CDD</h3>
+<!-- END PAGE HEADER-->
+<!-- BEGIN MAIN CONTENT -->
+<div class="row">
+	<div class="col-md-12">
+		<div class="text-center">
+			<h3>Selecciona el CDD</h3>
+			<select ng-options="c as c.name for c in cdds" ng-model="selected_cdd" ng-change="cdd_selected(selected_cdd)" ng-init="selected_cdd = cdds[0]" >
+			</select>
+		</div>
+		<div class="text-center" style="margin-top: 2em; font-size: 1.5em;">
+			<ul class="sub-menu" style="list-style-type: none;">
+				<li>
+					<a ui-sref="shopping_sales">
+						<i class="icon-puzzle"></i> Inventario y compras</span>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="supervisor_dashboard123123">
+						<i class="icon-paper-clip"></i> Pedidos</span>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="supervisor_dashboard123123">
+						<i class="icon-paper-clip"></i> Cajas y presupuesto</span>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="supervisor_dashboard123123">
+						<i class="icon-paper-clip"></i> Logs</span>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="supervisor_dashboard123123">
+						<i class="icon-paper-clip"></i> Compras y proveedores</span>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="income_expenses">
+						<i class="icon-paper-clip"></i> Ingresos y Egresos</span>
+					</a>
+				</li>
+				<li>
+					<a ui-sref="credit_note">
+						<i class="icon-paper-clip"></i> Nota a credito</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END MAIN CONTENT -->

@@ -97,14 +97,26 @@ angular.module('KanguDashboard', ["dndLists", "angucomplete-alt"]).controller('S
 		}
 		else
 			order_total_stack.stack.push({ text: 'Metodo de pago: Efectivo', style: 'subheader2' });
-		var client_info = {
-			stack: [
-				'Datos del cliente',
-				{ text: 'Nombre: '+o.place.name, style: 'subheader3' },
-				{ text: 'Direccion: '+o.sucursal.address_description, style: 'subheader3' },
-				{ text: 'Intrucciones: '+o.order.comment, style: 'subheader3' }
-			], style: 'subheader1'
-		};
+		if (o.order.order_type == 0) {
+			var client_info = {
+				stack: [
+					'Datos del cliente',
+					{ text: 'Nombre: '+o.place.name, style: 'subheader3' },
+					{ text: 'Direccion: '+o.sucursal.address_description, style: 'subheader3' },
+					{ text: 'Intrucciones: '+o.order.comment, style: 'subheader3' }
+				], style: 'subheader1'
+			};
+		}
+		else{
+			var client_info = {
+				stack: [
+					'Datos del cliente',
+					{ text: 'Nombre: '+o.order.wc_name + " "+ o.order.wc_lastname, style: 'subheader3' },
+					{ text: 'Direccion: '+o.order.wc_address, style: 'subheader3' },
+					{ text: 'Intrucciones: '+o.order.comment, style: 'subheader3' }
+				], style: 'subheader1'
+			};
+		}
 		var product_table = [[{text: 'Producto', style: 'tableHeader'}, {text: 'Cantidad', style: 'tableHeader'}, {text: 'Unidad', style: 'tableHeader'}, {text: 'Precio', style: 'tableHeader'}]];
 		for (var i = o.products.length - 1; i >= 0; i--) {
 			p = o.products[i];

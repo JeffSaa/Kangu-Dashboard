@@ -7,11 +7,7 @@
 			<i class="fa fa-angle-right"></i>
 		</li>
 		<li>
-			<a ui-sref="business_places">Negocios</a>
-			<i class="fa fa-angle-right"></i>
-		</li>
-		<li>
-			<a href="#">{{business_place.place.name | capitalize}}</a>
+			<a href="#">Ordenes</a>
 		</li>
 	</ul>
 	<div class="page-toolbar">
@@ -51,7 +47,7 @@
 					data-target="#show_order"
 					data-toggle="modal">
 					<div class="portlet-body">
-						<div class="well well-sm noMargin" style="padding:1%;">
+						<div class="well well-sm noMargin" style="padding:1%;" ng-class="o.order.order_type == 1 ? 'naturalOrder' : ''">
 							<h5 class="noMargin">{{o.sucursal.name | capitalize}}</h5>
 							<h5 class="noMargin">{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
@@ -82,7 +78,7 @@
 					data-target="#show_order"
 					data-toggle="modal">
 					<div class="portlet-body">
-						<div class="well well-sm noMargin" style="padding:1%;">
+						<div class="well well-sm noMargin" style="padding:1%;" ng-class="o.order.order_type == 1 ? 'naturalOrder' : ''">
 							<h5 class="noMargin">{{o.sucursal.name | capitalize}}</h5>
 							<h5 class="noMargin">{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
@@ -113,7 +109,7 @@
 					data-target="#show_order"
 					data-toggle="modal">
 					<div class="portlet-body">
-						<div class="well well-sm noMargin" style="padding:1%;">
+						<div class="well well-sm noMargin" style="padding:1%;" ng-class="o.order.order_type == 1 ? 'naturalOrder' : ''">
 							<h5 class="noMargin">{{o.sucursal.name | capitalize}}</h5>
 							<h5 class="noMargin">{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
@@ -144,7 +140,7 @@
 					data-target="#show_order"
 					data-toggle="modal">
 					<div class="portlet-body">
-						<div class="well well-sm noMargin" style="padding:1%;">
+						<div class="well well-sm noMargin" style="padding:1%;" ng-class="o.order.order_type == 1 ? 'naturalOrder' : ''">
 							<h5 class="noMargin">{{o.sucursal.name | capitalize}}</h5>
 							<h5 class="noMargin">{{o.order.total | currency:'$':0}} - {{o.order.datehour | date:"dd/MM/yy 'at' h:mma"}}</h5>
 						</div>
@@ -168,7 +164,8 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-				<h4 class="modal-title">Orden para {{order_selected.sucursal.name | capitalize}}</h4>
+				<h4 ng-show="order_selected.order.order_type == 0" class="modal-title">Orden para {{order_selected.sucursal.name | capitalize}}</h4>
+				<h4 ng-hide="order_selected.order.order_type == 0" class="modal-title">Orden para {{order_selected.order.wc_name + " " + order_selected.order.wc_lastname| capitalize}}</h4>
 			</div>
 			<div class="modal-body">
 				<div class="row" ng-hide="order_selected.order.status == 0 || order_selected.order.status == 1">

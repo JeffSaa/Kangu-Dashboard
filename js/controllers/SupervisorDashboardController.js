@@ -128,6 +128,16 @@ angular.module('KanguDashboard', ["dndLists", "angucomplete-alt"]).controller('S
 			product_table.push([p.variant.name, p.order_product.quantity, unit, $filter('currency')(price,'$','0')])
 		}
 		product_table.push([{text: 'Items: '+o.products.length, style: 'subheader4'}, '', {text: 'Total:', style: 'subheader4'}, {text: $filter('currency')(o.order.total,'$','0'), style: 'subheader4'}]);
+		var product_changed_products = [[{text: 'Producto', style: 'tableHeader'}, {text: 'Cantidad', style: 'tableHeader'}]];
+		for (var i = o.products.length - 1; i >= 0; i--) {
+			p = o.products[i];
+			var t = p.order_product.quantity - p.order_product.last_quantity;
+			console.log(t);
+			if (t>=0)
+				product_changed_products.push([p.variant.name, "+"+t])
+			else
+				product_changed_products.push([p.variant.name, t])
+		}
 		var docDefinition = {
 			content: [
 				{
@@ -153,6 +163,19 @@ angular.module('KanguDashboard', ["dndLists", "angucomplete-alt"]).controller('S
 						widths: ['*', '*', '*', '*'],
 						headerRows: 1,
 						body: product_table
+					},
+					layout: 'lightHorizontalLines'
+				},
+				divider,
+				{
+					text: 'Cambios de productos', style: 'subheader2'
+				},
+				{
+				style: 'tableExample',
+					table: {
+						widths: ['*', '*'],
+						headerRows: 1,
+						body: product_changed_products
 					},
 					layout: 'lightHorizontalLines'
 				},

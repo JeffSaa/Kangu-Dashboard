@@ -141,6 +141,15 @@
 						</div>
 					</div>
 					<div class="row">
+						<div class="col-md-12">
+							<span>Medio de pago</span>
+							<select class="form-control" ng-model="cart.pay_mode">
+								<option value="0">Efectivo</option>
+								<option value="1">Credito</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
 						<ul class="list-group">
 							<li class="list-group-item" ng-repeat="v in cart.products">
 								<div class="row">

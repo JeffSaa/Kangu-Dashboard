@@ -61,6 +61,7 @@ angular.module('KanguDashboard').controller('CreateOrderController', function($r
 			headers:{"Authorization":$rootScope.loadUser().token}
 		}).then(function successCallback(response) {
 			toastr.success('Orden creada');
+			console.log(response.data);
 		}, function errorCallback(response) {
 			toastr.error('Error completando accion');
 		});

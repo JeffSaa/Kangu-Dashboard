@@ -805,7 +805,7 @@ KanguDashboard.run(["$rootScope", "settings", "$state", function($rootScope, set
 	$rootScope.$settings = settings; // state to be accessed from view
 	$rootScope.server = function(){ // server address
 		if (window.location.href.indexOf('localhost') == -1) // validate develop enviroment
-			return "http://ec2-34-209-188-120.us-west-2.compute.amazonaws.com:3000/";
+			return "http://ec2-34-209-188-120.us-west-2.compute.amazonaws.com:3000/v1/";
 		else
 			return "http://localhost:3000/v1/";
 	}
